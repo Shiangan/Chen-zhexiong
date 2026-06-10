@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta property="og:title" content="【追思】陳哲雄 先生 雲端訃告">
+    <meta property="og:description" content="敬邀親友們，陪伴陳哲雄先生走完塵世最後一趟旅程。">
+    <link rel="icon" href="image/logo.ico" type="image/png">
+    <meta property="og:image" content="image/Write.png">
+    <meta property="og:type" content="website">
+    <title>永恆思念：田鐘寶珠 夫人</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face { font-family: 'ZF-Font'; src: url('Zf-Font.ttf') format('truetype'); font-display: swap; }
+        @font-face { font-family: 'Iansui';  src: url('Iansui-Regular.ttf') format('truetype'); font-display: swap; }
+
+        :root {
+            --bg-deep:    #e4ddd0;
+            --paper:      #f0ebe1;
+            --card-inner: rgba(228, 221, 208, 0.55);
+            --ink:        #272727;
+            --gold-dark:  #8a6f57;
+            --gold-light: #b09278;
+            --gold-pale:  #d4b99a;
+            --sub-ink:    #6a6a6a;
+            --max-w:      480px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            width: 100%; overflow-x: hidden;
+            background: var(--bg-deep);
+            color: var(--ink);
+            font-family: 'Iansui', 'Noto Serif TC', serif;
+            line-height: 1.8;
+            word-break: keep-all;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .u-block { display: inline-block; white-space: nowrap; }
+
+        .app-wrapper {
+            width: 100%; max-width: var(--max-w);
+            margin: 0 auto; position: relative;
+            background: var(--paper);
+            min-height: 100vh;
+            box-shadow: 0 0 80px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        /* 紙張紋理 */
+        .app-wrapper::before {
+            content: '';
+            position: fixed; inset: 0;
+            width: 100%; max-width: var(--max-w);
+            margin: 0 auto;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 500; opacity: 0.8;
+        }
+
+        /* 背景浮水印 */
+        .bg-watermark {
+            position: fixed; bottom: 10%; left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px; font-weight: 300;
+            color: rgba(138,111,87,0.05);
+            letter-spacing: 22px; z-index: 0;
+            pointer-events: none; white-space: nowrap;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 頂部暈染光 */
+        .top-glow {
+            position: absolute; top: -60px; left: 50%;
+            transform: translateX(-50%);
+            width: 320px; height: 320px;
+            background: radial-gradient(circle, rgba(180,151,122,0.12) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* ══ 頂部操作列 ══ */
+        .header-top {
+            text-align: center; padding: 50px 20px 12px;
+            position: relative; z-index: 10;
+        }
+        .top-logo { width: 90px; opacity: 0.75; margin-bottom: 22px; display: block; margin-inline: auto; }
+        .top-action-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .top-btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 10px 22px; border-radius: 30px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none; cursor: pointer;
+            border: 1px solid rgba(138,111,87,0.25);
+            background: rgba(228,221,208,0.4);
+            color: var(--sub-ink);
+            backdrop-filter: blur(6px);
+            transition: background 0.3s, border-color 0.3s, transform 0.2s;
+            font-family: inherit;
+        }
+        .top-btn:hover { background: rgba(228,221,208,0.85); border-color: var(--gold-dark); transform: translateY(-1px); }
+        .top-btn img { width: 14px; opacity: 0.55; }
+
+        /* ══ 主標題 ══ */
+        header { text-align: center; padding: 25px 0 55px; position: relative; z-index: 2; }
+
+        .header-ornament {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; margin-bottom: 20px;
+        }
+        .header-ornament span {
+            display: block; width: 6px; height: 6px;
+            background: var(--gold-pale); transform: rotate(45deg); opacity: 0.8;
+        }
+        .header-ornament span:nth-child(2) { width: 9px; height: 9px; background: var(--gold-dark); opacity: 0.9; }
+        .header-ornament::before, .header-ornament::after {
+            content: ''; display: block; height: 1px; width: 55px;
+            background: linear-gradient(to right, transparent, var(--gold-light)); opacity: 0.5;
+        }
+        .header-ornament::after { background: linear-gradient(to left, transparent, var(--gold-light)); }
+
+        .name-wrapper {
+            font-size: clamp(34px, 9.5vw, 46px);
+            font-weight: 900; letter-spacing: 0.22em;
+            margin: 10px 0 8px; color: var(--ink);
+        }
+        .name-wrapper::after {
+            content: '';
+            display: block; width: 50px; height: 2px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-pale));
+            margin: 14px auto 0; border-radius: 2px; opacity: 0.6;
+        }
+        .life-range {
+            font-size: 13.5px; letter-spacing: 3px;
+            color: var(--gold-dark); font-weight: 600; line-height: 2; margin-top: 14px;
+        }
+
+        /* ══ Section ══ */
+        section {
+            padding: 65px 28px; position: relative; z-index: 1;
+            opacity: 0; transform: translateY(28px);
+            transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1),
+                        transform 1.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        .section-title {
+            font-size: 19px; letter-spacing: 9px;
+            color: var(--gold-dark); font-weight: 700;
+            margin-bottom: 48px; display: flex;
+            align-items: center; justify-content: center; gap: 12px;
+        }
+        .section-title::before, .section-title::after {
+            content: ''; display: block; flex: 1; max-width: 50px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light)); opacity: 0.6;
+        }
+        .section-title::after { background: linear-gradient(270deg, transparent, var(--gold-light)); }
+
+        /* 節間分隔菱形 */
+        .section-divider {
+            width: 100%; display: flex; align-items: center;
+            justify-content: center; gap: 10px; padding: 0 28px;
+            position: relative; z-index: 2;
+        }
+        .section-divider::before, .section-divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(138,111,87,0.2));
+        }
+        .section-divider::after { background: linear-gradient(270deg, transparent, rgba(138,111,87,0.2)); }
+        .divider-diamond {
+            width: 5px; height: 5px; background: var(--gold-pale);
+            transform: rotate(45deg); flex-shrink: 0; opacity: 0.7;
+        }
+
+        /* ── 主圖框 ── */
+        .photo-frame { position: relative; margin-bottom: 36px; }
+        .photo-frame::before {
+            content: ''; position: absolute; inset: -6px;
+            border: 1px solid rgba(138,111,87,0.18);
+            border-radius: 3px; pointer-events: none;
+        }
+        .photo-frame::after {
+            content: ''; position: absolute; inset: -12px;
+            border: 1px solid rgba(138,111,87,0.08);
+            border-radius: 3px; pointer-events: none;
+        }
+        .img-inner {
+            width: 100%; border-radius: 2px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            display: block; cursor: zoom-in; position: relative; z-index: 1;
+        }
+
+        /* ── 訃告圖框 ── */
+        .obituary-wrap {
+            padding: 8px; background: var(--bg-deep);
+            border-radius: 2px; margin-bottom: 12px;
+            box-shadow: inset 0 0 18px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .obituary-img { width: 100%; display: block; cursor: zoom-in; }
+        .zoom-hint {
+            text-align: center; font-size: 12.5px;
+            color: var(--sub-ink); margin-top: 18px; letter-spacing: 2px; opacity: 0.7;
+        }
+
+        /* ══ 儀程 ══ */
+        .date-hero {
+            font-size: clamp(58px, 17vw, 76px);
+            font-weight: 900; line-height: 1;
+            text-align: center; letter-spacing: -2px; color: var(--ink);
+            text-shadow: 2px 4px 20px rgba(138,111,87,0.1);
+        }
+        .date-sub {
+            text-align: center; font-size: 14.5px;
+            letter-spacing: 3px; color: var(--sub-ink); margin-top: 14px;
+        }
+
+        /* 時間軸升級版 */
+        .time-timeline {
+            margin: 24px 0 0;
+            display: flex; flex-direction: column; align-items: stretch; gap: 0;
+            border: 1px solid rgba(138,111,87,0.12);
+            border-radius: 8px; overflow: hidden;
+        }
+        .time-box {
+            display: flex; align-items: center;
+            background: var(--card-inner);
+            position: relative; transition: background 0.3s;
+        }
+        .time-box + .time-box { border-top: 1px solid rgba(138,111,87,0.1); }
+        .time-tag-wrap {
+            padding: 22px 18px;
+            background: rgba(138,111,87,0.06);
+            border-right: 1px solid rgba(138,111,87,0.1);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-width: 88px;
+        }
+        .time-tag {
+            font-size: 15px; color: var(--gold-dark);
+            font-weight: 700; letter-spacing: 3px; text-align: center;
+        }
+        .time-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--gold-pale); margin-top: 8px;
+        }
+        .time-main {
+            font-size: 32px; font-weight: 900; color: var(--ink);
+            padding: 0 22px; line-height: 1;
+            font-variant-numeric: tabular-nums; letter-spacing: 1px;
+        }
+
+        /* ── 資訊卡片 ── */
+        .info-card {
+            border-radius: 8px; padding: 32px 22px;
+            background: var(--card-inner);
+            border: 1px solid rgba(138,111,87,0.13);
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .info-card::before {
+            content: ''; position: absolute; left: 0; top: 15%; bottom: 15%;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold-light), transparent);
+            opacity: 0.5;
+        }
+        .info-card + .info-card { margin-top: 16px; }
+        .info-label {
+            font-size: 18px; color: var(--gold-dark);
+            font-weight: 700; letter-spacing: 5px; margin-bottom: 14px; display: block;
+        }
+        .info-value { font-size: 21px; font-weight: 700; color: var(--ink); line-height: 1.65; }
+        .info-sub   { font-size: 13px; color: var(--sub-ink); margin-top: 9px; }
+
+        /* ── 注意事項 ── */
+        .notice-card {
+            background: rgba(176,146,120,0.04);
+            border: 1px solid rgba(176,146,120,0.14);
+            border-radius: 8px; padding: 24px 20px; margin-top: 28px;
+        }
+        .notice-item {
+            font-size: 13px; color: var(--sub-ink); margin-bottom: 12px;
+            display: flex; align-items: flex-start;
+            line-height: 1.65; text-align: justify;
+        }
+        .notice-item:last-child { margin-bottom: 0; }
+        .notice-item::before {
+            content: "‧"; color: var(--gold-light);
+            font-weight: 900; margin-right: 8px; flex-shrink: 0;
+        }
+
+        /* ── 按鈕 ── */
+        .btn-action {
+            display: block; width: 100%;
+            padding: 18px; text-align: center; text-decoration: none;
+            font-size: 13px; letter-spacing: 5px; font-weight: 700;
+            border-radius: 3px; cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+        .btn-action:hover { opacity: 0.86; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+        .btn-action:active { transform: translateY(0); }
+        .btn-outline {
+            border: 1px solid var(--gold-dark); color: var(--gold-dark);
+            background: transparent; margin-top: 20px;
+        }
+        .btn-solid {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, #7a6050 100%);
+            color: var(--paper); border: none; margin-top: 14px;
+        }
+
+        /* ══ Drawer ══ */
+        .tool-drawer {
+            margin-bottom: 14px; border-radius: 4px; overflow: hidden;
+            background: rgba(228,221,208,0.35);
+            border: 1px solid rgba(138,111,87,0.1);
+        }
+        .drawer-btn {
+            width: 100%; padding: 20px 24px;
+            background: none; border: none; text-align: left;
+            font-size: 15px; font-weight: 600; color: var(--ink);
+            font-family: inherit;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: background 0.3s;
+        }
+        .drawer-btn:hover { background: rgba(228,221,208,0.65); }
+        .drawer-btn .toggle-icon {
+            width: 26px; height: 26px;
+            border: 1px solid rgba(138,111,87,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: var(--gold-dark); font-weight: 400;
+            transition: transform 0.35s, background 0.3s; flex-shrink: 0;
+        }
+        .drawer-btn.open .toggle-icon { transform: rotate(45deg); background: rgba(138,111,87,0.08); }
+        .drawer-content {
+            display: none; padding: 22px;
+            background: rgba(228,221,208,0.18);
+            border-top: 1px solid rgba(138,111,87,0.08);
+        }
+        .drawer-content.open { display: block; }
+
+        /* ── 圖片格狀 ── */
+        .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .grid-item { text-align: center; cursor: zoom-in; }
+        .grid-item img {
+            width: 100%; border-radius: 2px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .grid-item img:hover { transform: scale(1.03); box-shadow: 0 8px 22px rgba(0,0,0,0.13); }
+        .grid-item p   { font-size: 13px; margin-top: 8px; font-weight: 600; }
+        .grid-item span{ font-size: 12px; color: var(--sub-ink); }
+
+        /* ── 聯絡框 ── */
+        .contact-box {
+            background: rgba(138,111,87,0.04); padding: 38px 24px;
+            border-radius: 3px; border: 1px solid rgba(138,111,87,0.1); text-align: center;
+        }
+        .contact-btns { display: flex; gap: 10px; margin-top: 22px; }
+        .c-btn {
+            flex: 1; padding: 15px; border-radius: 3px;
+            text-decoration: none; font-size: 13px; font-weight: 700;
+            color: #fff; text-align: center; letter-spacing: 2px;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+        .c-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+        /* ══ 書法區 ══ */
+        .calligraphy-area {
+            padding: 120px 10px;
+            opacity: 0; transform: translateY(28px); position: relative; overflow: hidden;
+            transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1),
+                        transform 1.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .calligraphy-area::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(138,111,87,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .calligraphy-area.visible { opacity: 1; transform: translateY(0); }
+        .ink-wrap {
+            display: flex; flex-direction: row-reverse;
+            justify-content: center; gap: 18px; height: 620px;
+            overflow: hidden; position: relative; z-index: 1;
+        }
+        .ink-line {
+            writing-mode: vertical-rl; font-family: 'ZF-Font', serif;
+            font-size: 23px; letter-spacing: 10px; color: var(--sub-ink); white-space: nowrap;
+        }
+        .ink-char { opacity: 0; display: inline-block; transition: opacity 0.6s ease; }
+        .ink-char.show { opacity: 1; }
+
+        /* ══ 浮動導航 ══ */
+        .float-nav {
+            position: fixed; bottom: 40px; right: 18px;
+            z-index: 999; display: flex; flex-direction: column; gap: 16px;
+        }
+        .float-nav a { display: block; }
+        .float-nav img {
+            width: 60px;
+            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
+            transition: transform 0.25s;
+        }
+        .float-nav img:hover { transform: scale(1.1); }
+
+        /* ══ Lightbox ══ */
+        #lightbox {
+            position: fixed; inset: 0;
+            background: rgba(20,20,20,0.97);
+            display: none; justify-content: center; align-items: center;
+            z-index: 10000; padding: 20px;
+        }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 100%; max-height: 92%; object-fit: contain; border-radius: 2px; }
+        #lightbox .lb-close {
+            position: absolute; top: 18px; right: 18px;
+            color: rgba(255,255,255,0.55); font-size: 26px; cursor: pointer; line-height: 1;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; transition: background 0.3s;
+        }
+        #lightbox .lb-close:hover { background: rgba(255,255,255,0.08); }
+
+        /* ══ Footer ══ */
+        .footer-wrap { padding: 60px 25px 140px; text-align: center; position: relative; }
+        .footer-ornament {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; margin-bottom: 30px;
+        }
+        .footer-ornament::before, .footer-ornament::after {
+            content: ''; flex: 1; max-width: 70px; height: 1px; background: rgba(138,111,87,0.2);
+        }
+        .footer-ornament-diamond { display: flex; gap: 6px; align-items: center; }
+        .footer-ornament-diamond span {
+            display: block; width: 4px; height: 4px;
+            background: rgba(138,111,87,0.3); transform: rotate(45deg);
+        }
+        .footer-ornament-diamond span:nth-child(2) { width: 6px; height: 6px; background: rgba(138,111,87,0.5); }
+        footer {
+            font-size: 20px; font-weight: 700; letter-spacing: 12px;
+            color: var(--gold-dark); opacity: 0.45;
+        }
+
+        /* ══ Toast ══ */
+        #toast {
+            position: fixed; bottom: 116px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(38,38,38,0.94); color: #fff;
+            padding: 12px 26px; border-radius: 30px;
+            font-size: 13.5px; letter-spacing: 2px;
+            z-index: 9999; pointer-events: none;
+            opacity: 0; transition: opacity 0.4s, transform 0.4s;
+            white-space: nowrap; backdrop-filter: blur(8px);
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* 進場動畫 */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .header-top { animation: fadeDown 1s ease both; animation-delay: 0.1s; opacity: 0; }
+        header      { animation: fadeDown 1s ease both; animation-delay: 0.35s; opacity: 0; }
+
+        @media (max-width: 360px) {
+            .time-tag  { font-size: 13px; }
+            .time-main { font-size: 26px; }
+            .ink-wrap  { gap: 10px; }
+            .ink-line  { font-size: 19px; }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false">
+    <audio id="bgm" loop preload="none">
+        <source src="Misson Part 1.mp3" type="audio/mpeg">
+    </audio>
+    <div id="toast"></div>
+
+    <div class="app-wrapper">
+        <div class="top-glow" aria-hidden="true"></div>
+        <div class="bg-watermark" aria-hidden="true">MEMORY</div>
+
+        <!-- ── 頂部操作列 ── -->
+        <div class="header-top">
+            <img src="image/logo.ico" class="top-logo" alt="祥安生命 Logo">
+            <div class="top-action-bar">
+                <button class="top-btn" onclick="copyText()" aria-label="複製奠禮資訊">
+                    <img src="https://img.icons8.com/material-outlined/24/777777/copy.png" alt=""> 複製資訊
+                </button>
+                <button class="top-btn" onclick="shareLine()" aria-label="透過LINE分享">
+                    <img src="https://img.icons8.com/material-rounded/24/8e735b/line-me.png" alt=""> 分享親友
+                </button>
+            </div>
+        </div>
+
+        <!-- ── 主標題 ── -->
+        <header>
+            <div class="header-ornament" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="name-wrapper u-block">陳哲雄 先生</div>
+            <div class="life-range">
+                <span class="u-block">永遠懷念　思念常在</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- ── § 告別式說明 ── -->
+            <section class="reveal" aria-label="告別式說明">
+                <div class="photo-frame">
+                    <img src="image/IMG_8307.jpeg" class="img-inner" onclick="openLightbox(this.src)" alt="田鐘寶珠夫人照片">
+                </div>
+                <div style="text-align:center; margin-top:48px;">
+                    <p style="font-size:17px; font-weight:600; letter-spacing:5px; margin-bottom:28px; color:var(--gold-dark);">
+                        父愛長存，德高望重
+                    </p>
+                    <p style="font-size:clamp(15px,4.2vw,17px); color:var(--sub-ink); line-height:2.9; letter-spacing:1.8px; padding:0 12px;">
+                        我最敬愛的父親
+                        <span class="u-block" style="font-weight:700; color:var(--ink); font-size:1.1em;">陳哲雄 先生</span><br>
+                        於家人們的陪伴與思念中，<br>
+                        <span class="u-block">圓滿塵世旅程，安祥辭世，</span><br>
+                        <span class="u-block">留下的溫暖與教誨，將永遠照亮我們。</span><br><br>
+                        謹擇於<br>
+                        <span class="u-block" style="color:var(--ink); font-weight:600;">民國 115 年 06 月 27 日（星期六）</span>，<br>
+                        於 <span class="u-block" style="color:var(--ink); font-weight:600;">桃園殯儀館</span><br>
+                        <span class="u-block" style="color:var(--ink); font-weight:600;">［和平廳］</span><br>
+                        舉辦追思告別奠禮
+                    </p>
+                </div>
+            </section>
+
+            <div class="section-divider" aria-hidden="true">
+                <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
+            </div>
+
+            <!-- ── § 訃告正本 ── -->
+            <section class="reveal" aria-label="訃告正本">
+                <span class="section-title">訃告正本公告</span>
+                <div class="obituary-wrap">
+                    <img src="image/IMG_8308.jpeg" class="obituary-img" onclick="openLightbox(this.src)" alt="訃告正本">
+                </div>
+                <p class="zoom-hint">（ 點擊圖片可放大閱讀 ）</p>
+            </section>
+
+            <div class="section-divider" aria-hidden="true">
+                <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
+            </div>
+
+            <!-- ── § 儀程 ── -->
+            <section class="reveal" aria-label="追思奠禮儀程">
+                <span class="section-title">追思奠禮 ‧ 儀程</span>
+
+                <div class="date-hero" aria-label="六月初四日">06.04</div>
+                <div class="date-sub">民國 115 年 ‧ 國曆六月初四日（星期四）</div>
+
+                <div class="info-card" style="margin-top:36px;">
+                    <span class="info-label">告別式會場</span>
+                    <div class="info-value">中壢御奠園</div>
+                    <div class="info-value">［追憶廳］</div>
+                    <div class="info-sub">320 桃園市中壢區忠福里培英路310號</div>
+                </div>
+
+                <div class="time-timeline" role="list">
+                    <div class="time-box" role="listitem">
+                        <div class="time-tag-wrap">
+                            <span class="time-tag">家奠禮</span>
+                            <div class="time-dot"></div>
+                        </div>
+                        <span class="time-main" aria-label="下午一時">13：00</span>
+                    </div>
+                    <div class="time-box" role="listitem">
+                        <div class="time-tag-wrap">
+                            <span class="time-tag">公奠禮</span>
+                            <div class="time-dot"></div>
+                        </div>
+                        <span class="time-main" aria-label="下午一時五十分">13：50</span>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-style:dashed; margin-top:16px;">
+                    <span class="info-label">平日安靈地點</span>
+                    <div class="info-value">喪宅</div>
+                    <div class="info-sub">320 桃園市蘆竹區五福里中山路87巷1弄16號</div>
+                    <div class="info-sub" style="margin-top:5px;">親友平日可前往上香弔唁</div>
+                </div>
+
+                <div class="notice-card">
+                    <div class="notice-item">請著整齊、樸素衣物出席，以表尊敬與追思之意。</div>
+                    <div class="notice-item">殯儀館內請勿說「再見」，以「平安」代替即可。</div>
+                    <div class="notice-item">奠禮會場備有淨水，若有需要可以自行取用。</div>
+                    <div class="notice-item">若因宗教信仰不方便持香，與工作人員示意即可。</div>
+                    <a href="https://maps.app.goo.gl/j6c8MCCKnta6JgZ68?g_st=ic"
+                       target="_blank" rel="noopener"
+                       class="btn-action btn-outline">📍 開啟地圖導航（桃園殯儀館）</a>
+                </div>
+
+                <button class="btn-action btn-solid" onclick="addCal()">📅 加入手機行事曆</button>
+            </section>
+
+            <div class="section-divider" aria-hidden="true">
+                <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
+            </div>
+
+            
+            <!-- ── 書法致謝區 ── -->
+            <div class="calligraphy-area" id="thanksSec" aria-label="家眷致謝">
+                <div class="ink-wrap" aria-hidden="true">
+                    <div class="ink-line" data-text="致 每一位溫暖的您"></div>
+                    <div class="ink-line" data-text="謝謝這段日子的關懷與陪伴"></div>
+                    <div class="ink-line" data-text="每一句問候 每一份情誼"></div>
+                    <div class="ink-line" data-text="都在我們心中 化作最暖的光"></div>
+                    <div class="ink-line" data-text="這份真誠厚情 我們將永誌於心"></div>
+                    <div class="ink-line" data-text="願 每一位親友平安順心"></div>
+                    <div class="ink-line" data-text="全體家眷 叩謝" style="margin-top:150px; color:var(--ink); font-weight:700;"></div>
+                </div>
+            </div>
+
+            <!-- ── 禮儀服務聯絡 ── -->
+            <div class="contact-box" style="margin:0 28px 70px;">
+                <span class="info-label">禮儀服務</span>
+                <div style="font-size:19px; font-weight:700;">陳柏元 先生</div>
+                <div class="contact-btns">
+                    <a href="tel:0938179858" class="c-btn" style="background:var(--gold-dark);">撥打電話</a>
+                    <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" rel="noopener" class="c-btn" style="background:#4a5d4e;">LINE 聯繫</a>
+                </div>
+            </div>
+
+            <div class="footer-wrap">
+                <div class="footer-ornament">
+                    <div class="footer-ornament-diamond">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <footer>祥安生命有限公司</footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- ── 浮動快速聯絡 ── -->
+    <nav class="float-nav" aria-label="快速聯絡">
+        <a href="tel:0938179858" aria-label="24小時專線">
+            <img src="image/24小時專線.png" alt="24小時專線">
+        </a>
+        <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" rel="noopener" aria-label="聯繫LINE">
+            <img src="image/聯繫line.PNG" alt="聯繫LINE">
+        </a>
+    </nav>
+
+    <!-- ── Lightbox ── -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="圖片放大檢視">
+        <span class="lb-close" onclick="closeLightbox()" aria-label="關閉">✕</span>
+        <img id="lbi" alt="放大圖片" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+    const bgm   = document.getElementById('bgm');
+    const lb    = document.getElementById('lightbox');
+    const lbi   = document.getElementById('lbi');
+    const toast = document.getElementById('toast');
+
+    const FULL_INFO = `【🍀追思告別】陳哲雄 先生
+
+🕯️奠禮日期：民國 115 年 06 月 27 日（星期六）
+🕯️ 家奠禮：下午 13：00
+🕯️ 公奠禮：下午 13：50
+📍 奠禮地點：桃園殯儀館
+📝 奠禮位置：［和平廳］
+
+🏠 平日安靈：喪宅（桃園市蘆竹區五福里中山路87巷1弄16號）
+
+🌹 敬邀您一同參與，家人們誠摯感謝
+
+🔗 雲端訃告詳情：${window.location.href}`;
+
+    let bgmStarted = false;
+    function startBGM() {
+        if (bgmStarted) return;
+        bgmStarted = true;
+        bgm.volume = 0.38;
+        bgm.play().catch(() => {});
+    }
+    document.addEventListener('click',      startBGM, { once: true });
+    document.addEventListener('touchstart', startBGM, { once: true });
+
+    let writingStarted = false;
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('visible');
+            if (entry.target.id === 'thanksSec' && !writingStarted) {
+                writingStarted = true; startWriting();
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('section.reveal, .calligraphy-area').forEach(el => observer.observe(el));
+
+    function startWriting() {
+        document.querySelectorAll('.ink-line').forEach((line, lineIdx) => {
+            const text = line.getAttribute('data-text');
+            if (!text) return;
+            line.innerHTML = '';
+            [...text].forEach((char, charIdx) => {
+                const span = document.createElement('span');
+                span.className = 'ink-char'; span.textContent = char;
+                line.appendChild(span);
+                setTimeout(() => span.classList.add('show'), lineIdx * 1100 + charIdx * 140);
+            });
+        });
+    }
+
+    function toggleDrawer(btn, id) {
+        const content = document.getElementById(id);
+        const isOpen  = content.classList.contains('open');
+        content.classList.toggle('open', !isOpen);
+        btn.classList.toggle('open', !isOpen);
+        btn.querySelector('.toggle-icon').textContent = isOpen ? '+' : '−';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        btn.parentElement.style.background = isOpen ? 'rgba(228,221,208,0.35)' : 'rgba(228,221,208,0.75)';
+    }
+
+    function openLightbox(src) {
+        lbi.src = src; lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+        lb.classList.remove('active'); document.body.style.overflow = '';
+        setTimeout(() => { lbi.src = ''; }, 300);
+    }
+    lb.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    let toastTimer;
+    function showToast(msg) {
+        clearTimeout(toastTimer); toast.textContent = msg;
+        toast.classList.add('show');
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    async function copyText() {
+        try {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(FULL_INFO);
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = FULL_INFO; ta.style.cssText = 'position:fixed;opacity:0';
+                document.body.appendChild(ta); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta);
+            }
+            showToast('✅ 奠禮資訊已複製');
+        } catch { showToast('複製失敗，請手動複製'); }
+    }
+
+    function shareLine() {
+        window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(FULL_INFO)}`;
+    }
+
+    function addCal() {
+        const title    = '陳哲雄先生追思奠禮';
+        const dates    = '20260627T130000/20260627T135000';
+        const details  = '地點：桃園殯儀館 ［和平廳］\n家奠禮 13：00 / 公奠禮 13：50';
+        const location = '桃園市桃園區大有路916號';
+        window.open(
+            `https://www.google.com/calendar/render?action=TEMPLATE` +
+            `&text=${encodeURIComponent(title)}&dates=${dates}` +
+            `&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`,
+            '_blank'
+        );
+    }
+    </script>
+</body>
+</html>
