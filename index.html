@@ -964,9 +964,12 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // Chapter switching and calligraphy writing animation
+        let currentChapter = 0;
         let writingTimeout = null;
 
         function switchChapter(index) {
+            currentChapter = index;
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach((tab, idx) => {
                 if (idx === index) tab.classList.add('active');
@@ -979,190 +982,155 @@
                 else chap.classList.remove('active');
             });
 
-            const container = document.getElementById('scrollContainer');
-            container.scrollLeft = container.scrollWidth;
-
             initAndWriteChapter(index);
         }
 
-      function initAndWriteChapter(index) {
-    // 1. 強制清理：確保切換時，前一個動畫立刻停止
-    if (writingTimeout) {
-        clearTimeout(writingTimeout);
-        writingTimeout = null;
-    }
+        function initAndWriteChapter(index) {
+            if (writingTimeout) clearTimeout(writingTimeout);
+            
+            // Reset all ink lines in all chapters first just in case
+            document.querySelectorAll('.ink-line').forEach(line => {
+                line.innerHTML = line.textContent; // strip spans if any
+            });
 
-    const targetChapter = document.getElementById(`chap-${index}`);
-    const lines = targetChapter.querySelectorAll('.ink-line');
-    
-    // 2. 檢查記憶：若該章節已完成，直接呈現結果
-    if (localStorage.getItem(`chapterDone_${index}`) === 'true') {
-        lines.forEach(line => {
-            if (!line.querySelector('.ink-char')) {
-                const text = line.textContent;
-                line.textContent = '';
-                for (let char of text) {
+            const activeChapter = document.getElementById(`chap-${index}`);
+            if (!activeChapter) return;
+
+            const lines = activeChapter.querySelectorAll('.ink-line');
+            let totalDelay = 0;
+
+            lines.forEach(line => {
+                const text = line.textContent.trim();
+                line.innerHTML = ''; // clear text
+                
+                for (let i = 0; i < text.length; i++) {
                     const span = document.createElement('span');
-                    span.className = 'ink-char inked'; 
-                    span.textContent = char;
+                    span.classList.add('ink-char');
+                    span.textContent = text[i];
                     line.appendChild(span);
                 }
-            } else {
-                line.querySelectorAll('.ink-char').forEach(span => span.classList.add('inked'));
+
+                const chars = line.querySelectorAll('.ink-char');
+                chars.forEach((char, charIdx) => {
+                    const delay = totalDelay + charIdx * 80; // 80ms per char
+                    setTimeout(() => {
+                        char.classList.add('inked');
+                    }, delay);
+                });
+                
+                totalDelay += text.length * 80 + 400; // 400ms pause between lines
+            });
+            
+            // Scroll container to start when switching
+            const scrollContainer = document.getElementById('scrollContainer');
+            if (scrollContainer) {
+                scrollContainer.scrollLeft = scrollContainer.scrollWidth; // scroll to right for vertical-rl
             }
-        });
-        document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 緬懷深情 ⟩";
-        return;
-    }
-
-
-    // --- 以下為原本的動畫邏輯 ---
-    if (writingTimeout) clearTimeout(writingTimeout);
-
-    const container = document.getElementById('scrollContainer');
-    const textQueue = [];
-
-    lines.forEach((line) => {
-        const originalText = line.textContent;
-        line.textContent = '';
-        const charSpans = [];
-        for (let char of originalText) {
-            const span = document.createElement('span');
-            span.className = 'ink-char';
-            span.textContent = char;
-            line.appendChild(span);
-            charSpans.push(span);
-        }
-        textQueue.push({ lineElement: line, spans: charSpans, type: line.classList.contains('chapter-title') ? 'title' : (line.classList.contains('highlight') ? 'highlight' : 'normal') });
-    });
-
-    let currentLineIndex = 0;
-    let currentCharIndex = 0;
-
-    function writeNextChar() {
-        if (currentLineIndex >= textQueue.length) {
-            // 動畫結束，記錄狀態到 localStorage
-            localStorage.setItem(`chapterDone_${index}`, 'true');
-            document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 翻閱盡此生深情 ⟩";
-            return;
         }
 
-        document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 正在逐字雋刻 ⟩";
-        const { lineElement, spans, type } = textQueue[currentLineIndex];
-
-        if (currentCharIndex < spans.length) {
-            spans[currentCharIndex].classList.add('inked');
-            currentCharIndex++;
-            // 自動捲動
-            container.scrollTo({ left: lineElement.offsetLeft - container.clientWidth + 140, behavior: 'smooth' });
-
-            let delay = (type === 'title') ? 160 : (type === 'highlight' ? 90 : 60);
-            const lastChar = spans[currentCharIndex - 1].textContent;
-            if (['，', '。', '！', '、', '：', '」', '「'].includes(lastChar)) delay += 450;
-            writingTimeout = setTimeout(writeNextChar, delay);
-        } else {
-            currentLineIndex++;
-            currentCharIndex = 0;
-            writingTimeout = setTimeout(writeNextChar, 500);
-        }
-    }
-    writeNextChar();
-}
-
-
+        // Lightbox
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
-            document.getElementById('lightbox-img').src = src;
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
             lb.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
         function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('active');
             document.body.style.overflow = '';
         }
+        
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
 
+        // Drawer Toggle
         function toggleDrawer(btn, id) {
-            const panel = document.getElementById(id);
-            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', !isExpanded);
-            if (!isExpanded) {
-                panel.classList.add('open');
-                btn.classList.add('open');
-                btn.querySelector('.toggle-icon').textContent = '×';
-            } else {
-                panel.classList.remove('open');
+            const content = document.getElementById(id);
+            const isOpen = content.classList.contains('open');
+            
+            // Close all drawers first (optional, if you want accordion behavior)
+            // document.querySelectorAll('.drawer-content').forEach(c => c.classList.remove('open'));
+            // document.querySelectorAll('.drawer-btn').forEach(b => b.classList.remove('open'));
+            
+            if (isOpen) {
+                content.classList.remove('open');
                 btn.classList.remove('open');
-                btn.querySelector('.toggle-icon').textContent = '+';
-            }
-        }
-
-        const bgm = document.getElementById('bgm');
-        const audioBtn = document.getElementById('audioBtn');
-        const audioText = document.getElementById('audioText');
-        const audioIcon = document.getElementById('audioIcon');
-
-        function toggleBgm() {
-            if (bgm.paused) {
-                bgm.play().then(() => {
-                    audioText.textContent = "暫停音樂";
-                    audioIcon.src = "https://img.icons8.com/material-rounded/24/272727/mute.png";
-                    showToast("🎵 播放懷念樂章");
-                }).catch(err => {
-                    showToast("瀏覽器限制，請再試一次");
-                });
             } else {
-                bgm.pause();
-                audioText.textContent = "播放音樂";
-                audioIcon.src = "https://img.icons8.com/material-rounded/24/272727/speaker.png";
-                showToast("🔇 音樂已暫停");
+                content.classList.add('open');
+                btn.classList.add('open');
             }
         }
 
+        // Toast
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
         }
 
+        // Copy Text
         function copyText() {
-            const info = `【追思告別奠禮】\n逝者：陳哲雄 先生\n時間：民國 115 年 06 月 27 日 (六) 家奠 14:30 / 公奠 15:30\n地點：桃園殯儀館［景德廳］\n線上訃告：${window.location.href}`;
-            navigator.clipboard.writeText(info).then(() => {
-                showToast("📋 奠禮資訊已複製成功");
-            }).catch(() => {
-                showToast("複製失敗，請手動複製");
+            const text = `【追思】陳哲雄 先生\n告別式：民國 115 年 06 月 27 日（星期六）\n家奠禮：14:30\n公奠禮：15:30\n地點：桃園殯儀館 景德廳\n地址：320 桃園市桃園區大有路916號`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已複製告別式資訊');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showToast('複製失敗，請手動複製');
             });
         }
 
+        // Share Line
         function shareLine() {
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://line.me/R/msg/text/?【雲端追思訃告】敬邀親友陪伴陳哲雄先生走完塵世最後一趟旅程。%0A${url}`, '_blank');
+            const text = encodeURIComponent('敬邀親友們，陪伴陳哲雄先生走完塵世最後一趟旅程。');
+            window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank');
         }
 
-        if(window.location.protocol === 'file:') { window.addCal = function() { showToast("📅 本地預覽不支援 ICS 下載"); } } else {
+        // Add to Calendar (ICS generation)
         function addCal() {
-            showToast("📅 正在下載行事曆檔案...");
-            const icsData = [
-                "BEGIN:VCALENDAR",
-                "VERSION:2.0",
-                "BEGIN:VEVENT",
-                "SUMMARY:【追思告別奠禮】陳哲雄 先生",
-                "DTSTART:20260627T143000",
-                "DTEND:20260627T163000",
-                "LOCATION:桃園殯儀館［景德廳］",
-                "DESCRIPTION:家奠禮：14:30 \\n公奠禮：15:30 \\n詳情請見雲端訃告。",
-                "END:VEVENT",
-                "END:VCALENDAR"
-            ].join("\n");
-            
-            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = '陳哲雄先生追思奠禮.ics';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const event = {
+                title: '陳哲雄 先生 告別式',
+                start: '20260627T063000Z', // 14:30 Taipei Time (UTC+8) -> 06:30 UTC. Year 115 = 2026
+                end: '20260627T083000Z',   // 16:30 Taipei Time
+                location: '桃園殯儀館 景德廳 (桃園市桃園區大有路916號)',
+                description: '家奠禮 14:30 / 公奠禮 15:30'
+            };
+            const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTART:${event.start}\r\nDTEND:${event.end}\r\nLOCATION:${event.location}\r\nSUMMARY:${event.title}\r\nDESCRIPTION:${event.description}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+            const blob = new Blob([ics], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '陳哲雄先生告別式.ics';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('行事曆檔案已下載');
         }
+
+        // Background Music
+        const bgm = document.getElementById('bgm');
+        let isPlaying = false;
+
+        function toggleBgm() {
+            if (isPlaying) {
+                bgm.pause();
+                document.getElementById('audioText').textContent = '播放音樂';
+                document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/speaker.png';
+            } else {
+                bgm.play().then(() => {
+                    document.getElementById('audioText').textContent = '暫停音樂';
+                    document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/mute.png';
+                }).catch(err => {
+                    showToast('請點擊畫面後再播放音樂');
+                });
+            }
+            isPlaying = !isPlaying;
         }
     </script>
 </body>
