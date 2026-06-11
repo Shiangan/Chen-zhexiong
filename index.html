@@ -1083,11 +1083,26 @@
             });
         }
 
-        // Share Line
-       function shareLine() {
+ function shareLine() {
+
+    const shareText = encodeURIComponent(
+`【追思】陳哲雄 先生
+
+告別式日期：115年06月27日（星期六）
+
+家奠禮：14:30
+公奠禮：15:30
+
+地點：桃園殯儀館 景德廳
+地址：桃園市桃園區大有路916號
+
+雲端訃聞：`
+    );
+
     const url = encodeURIComponent(window.location.href);
+
     window.open(
-        `https://social-plugins.line.me/lineit/share?url=${url}`,
+        `https://social-plugins.line.me/lineit/share?text=${shareText}%0A${url}`,
         '_blank'
     );
 }
