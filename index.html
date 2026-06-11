@@ -9,7 +9,7 @@
     <meta property="og:image" content="image/Write.png">
     <meta property="og:type" content="website">
     <title>永恆思念：陳哲雄 先生</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght=300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         @font-face { font-family: 'ZF-Font'; src: url('Zf-Font.ttf') format('truetype'); font-display: swap; }
         @font-face { font-family: 'Iansui';  src: url('Iansui-Regular.ttf') format('truetype'); font-display: swap; }
@@ -22,7 +22,7 @@
             --gold-dark:   #8a6f57;
             --gold-light: #b09278;
             --gold-pale:   #d4b99a;
-            --sub-ink:     #555555;
+            --sub-ink:     #424242;
             --max-w:       480px;
         }
 
@@ -37,7 +37,7 @@
             font-family: 'Iansui', 'Noto Serif TC', serif;
             line-height: 1.8;
             word-break: keep-all;
-            padding-bottom: 76px; /* 為底部固定列留出空間 */
+            padding-bottom: 76px;
         }
 
         .u-block { display: inline-block; white-space: nowrap; }
@@ -51,7 +51,6 @@
             overflow: hidden;
         }
 
-        /* 紙張紋理 */
         .app-wrapper::before {
             content: '';
             position: fixed; inset: 0;
@@ -61,7 +60,6 @@
             pointer-events: none; z-index: 500; opacity: 0.8;
         }
 
-        /* 背景浮水印 */
         .bg-watermark {
             position: fixed; bottom: 10%; left: 50%;
             transform: translateX(-50%);
@@ -72,7 +70,6 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 頂部暈染光 */
         .top-glow {
             position: absolute; top: -60px; left: 50%;
             transform: translateX(-50%);
@@ -81,7 +78,6 @@
             pointer-events: none; z-index: 0;
         }
 
-        /* ══ 頂部操作列 ══ */
         .header-top {
             text-align: center; padding: 50px 20px 12px;
             position: relative; z-index: 10;
@@ -104,7 +100,6 @@
         .top-btn:hover { background: rgba(228,221,208,0.9); border-color: var(--gold-dark); transform: translateY(-1px); }
         .top-btn img { width: 14px; opacity: 0.7; }
 
-        /* ══ 主標題 ══ */
         header { text-align: center; padding: 25px 0 45px; position: relative; z-index: 2; }
 
         .header-ornament {
@@ -139,7 +134,6 @@
             color: var(--gold-dark); font-weight: 600; line-height: 2; margin-top: 14px;
         }
 
-        /* ══ Section ══ */
         section {
             padding: 55px 24px; position: relative; z-index: 1;
             opacity: 0; transform: translateY(24px);
@@ -160,7 +154,6 @@
         }
         .section-title::after { background: linear-gradient(270deg, transparent, var(--gold-light)); }
 
-        /* 節間分隔菱形 */
         .section-divider {
             width: 100%; display: flex; align-items: center;
             justify-content: center; gap: 10px; padding: 0 24px;
@@ -176,7 +169,6 @@
             transform: rotate(45deg); flex-shrink: 0; opacity: 0.7;
         }
 
-        /* ── 主圖框 ── */
         .photo-frame { position: relative; margin-bottom: 36px; max-width: 340px; margin-inline: auto; }
         .photo-frame::before {
             content: ''; position: absolute; inset: -6px;
@@ -194,7 +186,6 @@
             display: block; cursor: zoom-in; position: relative; z-index: 1;
         }
 
-        /* ── 訃告圖框 ── */
         .obituary-wrap {
             padding: 8px; background: var(--bg-deep);
             border-radius: 4px; margin-bottom: 12px;
@@ -207,7 +198,6 @@
             color: var(--sub-ink); margin-top: 18px; letter-spacing: 2px; opacity: 0.8;
         }
 
-        /* ══ 儀程 ══ */
         .date-hero {
             font-size: clamp(58px, 17vw, 76px);
             font-weight: 900; line-height: 1;
@@ -221,7 +211,6 @@
             font-weight: 600;
         }
 
-        /* 時間軸（優化為致中且不帶點的乾淨設計） */
         .time-timeline {
             margin: 24px 0 0;
             display: flex; flex-direction: column; align-items: stretch; gap: 0;
@@ -250,7 +239,6 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* ── 資訊卡片 ── */
         .info-card {
             border-radius: 8px; padding: 32px 22px;
             background: var(--card-inner);
@@ -272,7 +260,6 @@
         .info-value { font-size: 21px; font-weight: 700; color: var(--ink); line-height: 1.65; }
         .info-sub   { font-size: 13.5px; color: var(--sub-ink); margin-top: 9px; line-height: 1.5; }
 
-        /* ── 注意事項 ── */
         .notice-card {
             background: rgba(176,146,120,0.05);
             border: 1px solid rgba(176,146,120,0.16);
@@ -289,7 +276,6 @@
             font-size: 11px; margin-right: 8px; flex-shrink: 0; margin-top: 2px;
         }
 
-        /* ── 按鈕 ── */
         .btn-action {
             display: block; width: 100%;
             padding: 18px; text-align: center; text-decoration: none;
@@ -310,7 +296,6 @@
             box-shadow: 0 4px 12px rgba(122,96,80,0.2);
         }
 
-        /* ══ Drawer 折疊面板 ══ */
         .tool-drawer {
             margin-bottom: 14px; border-radius: 6px; overflow: hidden;
             background: rgba(228,221,208,0.4);
@@ -343,7 +328,6 @@
         }
         .drawer-content.open { display: block; }
 
-        /* ── 圖片格狀 ── */
         .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .grid-item { text-align: center; cursor: zoom-in; }
         .grid-item img {
@@ -356,7 +340,6 @@
         .grid-item p   { font-size: 13.5px; margin-top: 8px; font-weight: 600; color: var(--ink); }
         .grid-item span{ font-size: 12px; color: var(--sub-ink); display: block; margin-top: 2px; }
 
-        /* ── 聯絡框 ── */
         .contact-box {
             background: rgba(138,111,87,0.05); padding: 32px 24px;
             border-radius: 6px; border: 1px solid rgba(138,111,87,0.12); text-align: center;
@@ -370,61 +353,131 @@
         }
         .c-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* ══ 書法區 ══ */
+        /* ═══ 終極優化：書法直排高度優化與安全高度防裁切 ═══ */
         .calligraphy-area {
-            padding: 100px 10px;
-            opacity: 0; transform: translateY(24px); position: relative; overflow: hidden;
-            transition: opacity 1.2s cubic-bezier(0.16,1,0.3,1),
-                        transform 1.2s cubic-bezier(0.16,1,0.3,1);
-        }
-        .calligraphy-area::before {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(138,111,87,0.08) 0%, transparent 70%);
-            pointer-events: none;
+            padding: 50px 0 35px;
+            opacity: 0; transform: translateY(24px); position: relative;
+            transition: opacity 1.5s cubic-bezier(0.16,1,0.3,1),
+                        transform 1.5s cubic-bezier(0.16,1,0.3,1);
+            background: rgba(138,111,87,0.03);
+            border-top: 1px solid rgba(138,111,87,0.1);
+            border-bottom: 1px solid rgba(138,111,87,0.1);
         }
         .calligraphy-area.visible { opacity: 1; transform: translateY(0); }
+        
+        .scroll-hint {
+            text-align: center; font-size: 13px; color: var(--gold-dark);
+            margin-bottom: 20px; letter-spacing: 3px; font-weight: 600;
+        }
+
+        .story-tabs {
+            display: flex; justify-content: center; gap: 8px;
+            padding: 0 16px 20px; flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(228,221,208,0.6);
+            border: 1px solid rgba(138,111,87,0.3);
+            padding: 8px 14px; border-radius: 4px;
+            font-family: inherit; font-size: 13px; font-weight: 600;
+            color: var(--sub-ink); cursor: pointer; letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: var(--gold-dark); color: var(--paper);
+            border-color: var(--gold-dark); box-shadow: 0 3px 10px rgba(138,111,87,0.25);
+        }
+
+        /* 橫向卷軸容器：微調高度與內距 */
+        .scroll-container {
+            width: 100%; overflow-x: auto; overflow-y: hidden;
+            padding: 15px 24px 25px; 
+            -webkit-overflow-scrolling: touch;
+        }
+        .scroll-container::-webkit-scrollbar { height: 4px; }
+        .scroll-container::-webkit-scrollbar-track { background: transparent; }
+        .scroll-container::-webkit-scrollbar-thumb { background: var(--gold-pale); border-radius: 2px; }
+
+        /* 經摺裝主結構 */
         .ink-wrap {
             display: flex; flex-direction: row-reverse;
-            justify-content: center; gap: 20px; height: 580px;
-            overflow: hidden; position: relative; z-index: 1;
+            gap: 28px; 
+            height: fit-content;
+            width: max-content; padding-left: 40px; padding-right: 20px;
         }
-        .ink-line {
-            writing-mode: vertical-rl; font-family: 'ZF-Font', 'Noto Serif TC', serif;
-            font-size: 22px; letter-spacing: 8px; color: var(--sub-ink); white-space: nowrap;
-        }
-        .ink-char { opacity: 0; display: inline-block; transition: opacity 0.5s ease; }
-        .ink-char.show { opacity: 1; }
 
-        /* ══ Lightbox 燈箱 ══ */
+        .story-chapter {
+            display: none; flex-direction: row-reverse; gap: 28px;
+        }
+        .story-chapter.active { display: flex; }
+
+        /* 🖋️ 核心 CSS 優化：防遮擋、防吃字、手寫動態載體 */
+        .ink-line {
+            writing-mode: vertical-rl; 
+            -webkit-writing-mode: vertical-rl;
+            font-family: 'ZF-Font', 'Noto Serif TC', serif;
+            font-size: 17.5px; letter-spacing: 5px; color: var(--sub-ink);
+            line-height: 1.8; white-space: nowrap;
+            display: inline-block; text-align: left;
+            height: fit-content;
+            max-height: 320px; /* 安全單行最高上限 */
+            padding-bottom: 60px; /* 預留底部絕對安全空白，絕不被擋字 */
+        }
+
+        /* 修正重點：加大標題左右間距(直排為前後行)，徹底解決擋道吃字 */
+        .ink-line.chapter-title {
+            font-size: 20px; color: var(--gold-dark); font-weight: 700;
+            letter-spacing: 6px; 
+            margin-left: 24px;   /* 增加左側間距（前行內文與此標題的距離）*/
+            margin-right: 12px;  /* 增加右側間距（此標題與後續內文的距離）*/
+            border-left: 1px dashed rgba(138,111,87,0.3);
+            padding-left: 16px;
+            padding-bottom: 60px;
+        }
+        .ink-line.highlight {
+            color: var(--ink); font-weight: 600;
+            background: rgba(180,151,122,0.06);
+            padding: 8px 6px 60px 6px;
+            border-radius: 2px;
+        }
+
+        /* 🖋️ 核心優化：手寫毛筆揮毫感（非死板打字感） */
+        .ink-char {
+            display: inline-block;
+            opacity: 0;
+            filter: blur(8px); /* 大範圍模糊模擬乾筆墨韻 */
+            transform: scale(1.1) translateY(8px); /* 微調大小與縱向位移，模擬落筆動態 */
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        filter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        /* 揮毫落紙完成狀態 */
+        .ink-char.inked {
+            opacity: 1;
+            filter: blur(0px);
+            transform: scale(1) translateY(0);
+        }
+
         #lightbox {
             position: fixed; inset: 0;
             background: rgba(15,15,15,0.96);
             display: none; justify-content: center; align-items: center;
             z-index: 10000; padding: 20px;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
         }
         #lightbox.active { display: flex; }
-        #lightbox img { max-width: 100%; max-height: 90%; object-fit: contain; border-radius: 2px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        #lightbox img { max-width: 100%; max-height: 90%; object-fit: contain; border-radius: 2px; }
         #lightbox .lb-close {
             position: absolute; top: 20px; right: 20px;
             color: rgba(255,255,255,0.7); font-size: 24px; cursor: pointer; line-height: 1;
             width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: all 0.3s ease;
-            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
         }
-        #lightbox .lb-close:hover { background: rgba(255,255,255,0.1); color: #fff; transform: rotate(90deg); }
 
-        /* ══ Footer ══ */
         .footer-wrap { padding: 40px 25px 40px; text-align: center; position: relative; }
         .footer-ornament {
             display: flex; align-items: center; justify-content: center;
             gap: 12px; margin-bottom: 24px;
-        }
-        .footer-ornament::before, .footer-ornament::after {
-            content: ''; flex: 1; max-width: 70px; height: 1px; background: rgba(138,111,87,0.2);
         }
         .footer-ornament-diamond { display: flex; gap: 6px; align-items: center; }
         .footer-ornament-diamond span {
@@ -437,23 +490,18 @@
             color: var(--gold-dark); opacity: 0.5;
         }
 
-        /* ══ Toast ══ */
         #toast {
             position: fixed; bottom: 90px; left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: rgba(38,38,38,0.96); color: #fff;
             padding: 14px 28px; border-radius: 30px;
-            font-size: 14px; letter-spacing: 2px; text-indent: 2px;
-            z-index: 9999; pointer-events: none;
+            font-size: 14px; letter-spacing: 2px; z-index: 9999;
             opacity: 0; transition: opacity 0.4s, transform 0.4s;
-            white-space: nowrap; backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            white-space: nowrap; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             font-weight: 600;
         }
         #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* ══ 底部固定聯絡列 ══ */
         .sticky-bottom-bar {
             position: fixed; bottom: 0; left: 50%;
             transform: translateX(-50%);
@@ -463,33 +511,24 @@
             border-top: 1px solid rgba(138, 111, 87, 0.2);
             display: grid; grid-template-columns: 1fr 1.2fr 1fr;
             padding: 8px 12px; gap: 10px; z-index: 400;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
         }
         .sticky-bar-btn {
             display: flex; align-items: center; justify-content: center; gap: 6px;
             border-radius: 34px; font-size: 13.5px; font-weight: 700;
             text-decoration: none; font-family: inherit; transition: all 0.2s ease;
-            cursor: pointer; border: none;
         }
         .s-btn-phone { background: var(--gold-dark); color: #fff; }
         .s-btn-line { background: #4a5d4e; color: #fff; }
         .s-btn-audio { background: rgba(138, 111, 87, 0.12); color: var(--ink); border: 1px solid rgba(138, 111, 87, 0.2); }
         .sticky-bar-btn img { width: 15px; height: 15px; }
 
-        /* 進場動畫 */
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .header-top { animation: fadeDown 1s ease both; animation-delay: 0.1s; opacity: 0; }
-        header      { animation: fadeDown 1s ease both; animation-delay: 0.35s; opacity: 0; }
-
         @media (max-width: 360px) {
             .time-tag  { font-size: 14px; }
             .time-main { font-size: 24px; }
-            .ink-wrap  { gap: 12px; }
-            .ink-line  { font-size: 19px; }
-            .sticky-bar-btn { font-size: 12px; gap: 4px; }
+            .scroll-container { padding: 10px 16px 30px; }
+            .ink-wrap  { gap: 20px; }
+            .ink-line  { font-size: 15.5px; padding-bottom: 50px; max-height: 290px; }
+            .ink-line.chapter-title { font-size: 18px; padding-bottom: 50px; margin-left: 16px; margin-right: 8px; }
         }
     </style>
 </head>
@@ -508,10 +547,10 @@
         <div class="header-top">
             <img src="image/logo.ico" class="top-logo" alt="祥安生命 Logo">
             <div class="top-action-bar">
-                <button class="top-btn" onclick="copyText()" aria-label="複製奠禮資訊">
+                <button class="top-btn" onclick="copyText()">
                     <img src="https://img.icons8.com/material-outlined/24/777777/copy.png" alt=""> 複製資訊
                 </button>
-                <button class="top-btn" onclick="shareLine()" aria-label="透過LINE分享">
+                <button class="top-btn" onclick="shareLine()">
                     <img src="https://img.icons8.com/material-rounded/24/8e735b/line-me.png" alt=""> 分享親友
                 </button>
             </div>
@@ -536,11 +575,11 @@
                     <p style="font-size:18px; font-weight:700; letter-spacing:5px; text-indent:5px; margin-bottom:28px; color:var(--gold-dark);">
                         父愛長存 ‧ 德高望重
                     </p>
-                    <p style="font-size:clamp(15px,4.2vw,17px); color:var(--sub-ink); line-height:2.9; letter-spacing:2px; text-indent:2px; padding:0 8px; font-weight: 400;">
+                    <p style="font-size:clamp(15px,4.2vw,17px); color:var(--sub-ink); line-height:2.9; letter-spacing:2px; padding:0 8px;">
                         我最敬愛的父親<br>
                         <span class="u-block" style="font-weight:700; color:var(--ink); font-size:1.15em;">陳哲雄 先生</span><br>
                         於家人們的陪伴與思念中，<br>
-                        <span class="u-block">圓慢塵世旅程，安祥辭世，</span><br>
+                        <span class="u-block">圓滿塵世旅程，安祥辭世，</span><br>
                         <span class="u-block">留下的溫暖與教誨，將永遠照亮我們。</span><br><br>
                         謹擇於<br>
                         <span class="u-block" style="color:var(--ink); font-weight:700;">民國 115 年 06 月 27 日（星期六）</span>，<br>
@@ -570,7 +609,7 @@
             <section class="reveal" aria-label="追思奠禮儀程">
                 <span class="section-title">追思奠禮 ‧ 儀程</span>
 
-                <div class="date-hero" aria-label="六月二十七日">06.27</div>
+                <div class="date-hero">06.27</div>
                 <div class="date-sub">民國 115 年 ‧ 國曆六月廿七日（星期六）</div>
 
                 <div class="info-card" style="margin-top:36px;">
@@ -585,13 +624,13 @@
                         <div class="time-tag-wrap">
                             <span class="time-tag">家奠禮</span>
                         </div>
-                        <span class="time-main" aria-label="下午二時三行為">14：30</span>
+                        <span class="time-main">14：30</span>
                     </div>
                     <div class="time-box" role="listitem">
                         <div class="time-tag-wrap">
                             <span class="time-tag">公奠禮</span>
                         </div>
-                        <span class="time-main" aria-label="下午三時三十分">15：30</span>
+                        <span class="time-main">15：30</span>
                     </div>
                 </div>
 
@@ -604,12 +643,11 @@
 
                 <div class="notice-card">
                     <div class="notice-item">請著整齊、樸素衣物出席，以表尊敬與追思之意。</div>
-                    <div class="notice-item">殯儀館內請勿說「再見」，以「平安」代替即可。</div>
+                    <div class="notice-item">外出的親友開車前來，周邊皆有收費停車場可供利用。</div>
+                    <div class="notice-item">打招呼請以「平安」代替「再見」。</div>
                     <div class="notice-item">奠禮會場備有淨水，若有需要可以自行取用。</div>
                     <div class="notice-item">若因宗教信仰不方便持香，與工作人員示意即可。</div>
-                    <a href="https://maps.google.com/?q=桃園殯儀館"
-                       target="_blank" rel="noopener"
-                       class="btn-action btn-outline">📍 開啟地圖導航（桃園殯儀館）</a>
+                    <a href="https://maps.app.goo.gl/wShZ6z1w4BfeW7fK9" target="_blank" rel="noopener" class="btn-action btn-outline">📍 開啟地圖導航（桃園殯儀館）</a>
                 </div>
 
                 <button class="btn-action btn-solid" onclick="addCal()">📅 加入手機行事曆</button>
@@ -623,48 +661,23 @@
                 <span class="section-title">致意資訊導引</span>
 
                 <div class="tool-drawer">
-                    <button class="drawer-btn" onclick="toggleDrawer(this,'flower')" aria-expanded="false" aria-controls="flower">
-                        致意花禮樣式
-                        <span class="toggle-icon" aria-hidden="true">+</span>
+                    <button class="drawer-btn" onclick="toggleDrawer(this,'flower')">
+                        致意花禮樣式 <span class="toggle-icon">+</span>
                     </button>
-                    <div id="flower" class="drawer-content" role="region">
+                    <div id="flower" class="drawer-content">
                         <div class="img-grid">
-                            <div class="grid-item" onclick="openLightbox('image/花籃A款.JPG')">
-                                <img src="image/花籃A款.JPG" alt="花籃樣式A">
-                                <p>樣式 A</p><span>NT$ 2,500 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃B款.JPG')">
-                                <img src="image/花籃B款.JPG" alt="花籃樣式B">
-                                <p>樣式 B</p><span>NT$ 3,000 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃C款.JPG')">
-                                <img src="image/花籃C款.JPG" alt="花籃樣式C">
-                                <p>樣式 C</p><span>NT$ 3,500 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃D款.JPG')">
-                                <img src="image/花籃D款.JPG" alt="花籃樣式D">
-                                <p>樣式 D</p><span>NT$ 4,500 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃E款.JPG')">
-                                <img src="image/花籃E款.JPG" alt="花籃樣式E">
-                                <p>樣式 E</p><span>NT$ 5,000 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃F款.JPG')">
-                                <img src="image/花籃F款.JPG" alt="花籃樣式F">
-                                <p>樣式 F</p><span>NT$ 5,500 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃G款.JPG')">
-                                <img src="image/花籃G款.JPG" alt="花籃樣式G">
-                                <p>樣式 G</p><span>NT$ 6,000 / 對</span>
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/花籃H款.JPG')">
-                                <img src="image/花籃H款.JPG" alt="花籃樣式H">
-                                <p>樣式 H</p><span>NT$ 6,500 / 對</span>
-                            </div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃A款.JPG')"><img src="image/花籃A款.JPG"><p>樣式 A</p><span>NT$ 2,500 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃B款.JPG')"><img src="image/花籃B款.JPG"><p>樣式 B</p><span>NT$ 3,000 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃C款.JPG')"><img src="image/花籃C款.JPG"><p>樣式 C</p><span>NT$ 3,500 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃D款.JPG')"><img src="image/花籃D款.JPG"><p>樣式 D</p><span>NT$ 4,500 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃E款.JPG')"><img src="image/花籃E款.JPG"><p>樣式 E</p><span>NT$ 5,000 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃F款.JPG')"><img src="image/花籃F款.JPG"><p>樣式 F</p><span>NT$ 5,500 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃G款.JPG')"><img src="image/花籃G款.JPG"><p>樣式 G</p><span>NT$ 6,000 / 對</span></div>
+                            <div class="grid-item" onclick="openLightbox('image/花籃H款.JPG')"><img src="image/花籃H款.JPG"><p>樣式 H</p><span>NT$ 6,500 / 對</span></div>
                         </div>
                         <div class="contact-box" style="margin-top:20px;">
                             <span class="info-label">線上訂購花禮</span>
-                            <div style="font-size:18px; font-weight:700; color: var(--ink);">陳柏元 先生</div>
+                            <div style="font-size:18px; font-weight:700;">陳柏元 先生</div>
                             <div class="contact-btns">
                                 <a href="tel:0938179858" class="c-btn" style="background:var(--gold-dark);">撥打電話</a>
                                 <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" rel="noopener" class="c-btn" style="background:#4a5d4e;">LINE 聯繫</a>
@@ -674,18 +687,13 @@
                 </div>
 
                 <div class="tool-drawer">
-                    <button class="drawer-btn" onclick="toggleDrawer(this,'map_ref')" aria-expanded="false" aria-controls="map_ref">
-                        會場交通位置圖
-                        <span class="toggle-icon" aria-hidden="true">+</span>
+                    <button class="drawer-btn" onclick="toggleDrawer(this,'map_ref')">
+                        會場交通位置圖 <span class="toggle-icon">+</span>
                     </button>
-                    <div id="map_ref" class="drawer-content" role="region">
+                    <div id="map_ref" class="drawer-content">
                         <div class="img-grid">
-                            <div class="grid-item" onclick="openLightbox('image/IMG_0133.jpeg')">
-                                <img src="image/IMG_0133.jpeg" alt="交通圖1">
-                            </div>
-                            <div class="grid-item" onclick="openLightbox('image/IMG_9265.jpeg')">
-                                <img src="image/IMG_9265.jpeg" alt="交通圖2">
-                            </div>
+                            <div class="grid-item" onclick="openLightbox('image/IMG_0133.jpeg')"><img src="image/IMG_0133.jpeg"></div>
+                            <div class="grid-item" onclick="openLightbox('image/IMG_9265.jpeg')"><img src="image/IMG_9265.jpeg"></div>
                         </div>
                     </div>
                 </div>
@@ -696,10 +704,214 @@
             </div>
 
             <div class="calligraphy-area reveal">
-                <div class="ink-wrap">
-                    <div class="ink-line" style="font-size: 24px; color: var(--ink); font-weight: 600;">生如夏花之絢爛</div>
-                    <div class="ink-line">逝如秋葉之靜美</div>
-                    <div class="ink-line" style="margin-right:20px;">思念無盡 ‧ 精神長存</div>
+                <p class="scroll-hint" id="scrollHint">⟨ 歲月長卷 ‧ 點選章節翻閱深情 ⟩</p>
+                
+                <div class="story-tabs">
+                    <button class="tab-btn active" onclick="switchChapter(0)">一、痛徹心髓</button>
+                    <button class="tab-btn" onclick="switchChapter(1)">二、赤足同行</button>
+                    <button class="tab-btn" onclick="switchChapter(2)">三、商場浮沉</button>
+                    <button class="tab-btn" onclick="switchChapter(3)">四、相顧流淚</button>
+                </div>
+
+                <div class="scroll-container" id="scrollContainer">
+                    <div class="ink-wrap" id="storyInkWrap">
+                        
+                        <div class="story-chapter active" id="chap-0">
+                            <div class="ink-line chapter-title">痛徹心髓：送別一生摯友與慈父</div>
+                            <div class="ink-line">江城如夢，夜雨霖鈴。</div>
+                            <div class="ink-line">慟聞春男伯父聞訊時的嚎啕大哭，</div>
+                            <div class="ink-line">那穿透電話、穿透歲歲的悲慟，</div>
+                            <div class="ink-line">瞬間將我徹底擊碎。</div>
+                            <div class="ink-line highlight">「你爸一生的辛苦我親眼看過，</div>
+                            <div class="ink-line highlight">我比任何人清楚。</div>
+                            <div class="ink-line highlight">我們八十多年的親情，</div>
+                            <div class="ink-line highlight">終於走到天下沒有不散的宴席，</div>
+                            <div class="ink-line highlight">我很難過，很不捨……」</div>
+                            <div class="ink-line">春男伯父這字字啼血的回覆，</div>
+                            <div class="ink-line">如同暮鼓寒鐘，</div>
+                            <div class="ink-line">撞擊著晚輩乾涸的心淚。</div>
+                            <div class="ink-line">八十載的春風秋雨，</div>
+                            <div class="ink-line">兩條生命從蹣跚學步到白髮蒼蒼，</div>
+                            <div class="ink-line">終究在命運的終點線前，</div>
+                            <div class="ink-line">被硬生生扯斷了相連的氣息。</div>
+                            <div class="ink-line">看著老人家老淚縱橫、</div>
+                            <div class="ink-line">久久無法平復的悲愴，</div>
+                            <div class="ink-line">我彷彿看見了世間最純粹的真情。</div>
+                            <div class="ink-line">這不是尋常的客套，</div>
+                            <div class="ink-line">傷感的是兩個靈魂在人間歷劫、</div>
+                            <div class="ink-line">相互依偎八十年的血淚交融。</div>
+                            <div class="ink-line highlight">十年生死兩茫茫，不思量，自難忘。</div>
+                            <div class="ink-line">常若蘇子對亡妻是幽冥永隔的孤寂，</div>
+                            <div class="ink-line">那麼今日我對父親的離去，</div>
+                            <div class="ink-line">以及春男伯父對摯友的送別，</div>
+                            <div class="ink-line">便是半身已歿的撕裂。</div>
+                            <div class="ink-line">父親，您走了。</div>
+                            <div class="ink-line">走得那樣倉促，</div>
+                            <div class="ink-line">將人世風霜與未完緣分，</div>
+                            <div class="ink-line">生生拋給了我們。</div>
+                            <div class="ink-line">我枯坐在您慣常坐的椅子旁，</div>
+                            <div class="ink-line">屋子裡似乎還殘留著您的氣息，</div>
+                            <div class="ink-line">可任憑我如何呼喊、落淚，</div>
+                            <div class="ink-line">再也不會傳來溫熱的叮嚀。</div>
+                            <div class="ink-line highlight">「孤墳遙望，無處話淒涼。」</div>
+                            <div class="ink-line">蘇軾寫下此詞時，</div>
+                            <div class="ink-line">是痛到極致後的麻木與清醒；</div>
+                            <div class="ink-line">而我此時的悲愴，</div>
+                            <div class="ink-line">是眼睜睜看著一個時代的落幕，</div>
+                            <div class="ink-line">看著您一生苦難與堅韌的句點，</div>
+                            <div class="ink-line">看到您為了那一口氣，</div>
+                            <div class="ink-line">就是要努力求活的執著。</div>
+                            <div class="ink-line">您這一生，過得太辛苦、太不易。</div>
+                            <div class="ink-line">您用那粗糙的手掌、</div>
+                            <div class="ink-line">用那寬闊卻漸漸駝下去的脊樑，</div>
+                            <div class="ink-line">扛起了家庭的重擔，</div>
+                            <div class="ink-line">在驚濤浪潮的歲月裡，</div>
+                            <div class="ink-line">生生為我們劈開了一條生路。</div>
+                            <div class="ink-line">您從不邀功，也從不抱怨，</div>
+                            <div class="ink-line">那些深夜裡的嘆息、</div>
+                            <div class="ink-line">那些獨自吞下的委屈，</div>
+                            <div class="ink-line">我都看在眼裡，痛在心裡。</div>
+                            <div class="ink-line">父親，謝謝您！</div>
+                            <div class="ink-line">謝謝您用一生的勞碌，</div>
+                            <div class="ink-line">換來了我們的安穩；</div>
+                            <div class="ink-line">謝謝您用那毫無保留的父愛，</div>
+                            <div class="ink-line">灌溉了我們五個小孩的生命。</div>
+                            <div class="ink-line">這份恩情，重如泰山，</div>
+                            <div class="ink-line">做兒女的，縱使燃盡此生，</div>
+                            <div class="ink-line">亦無以為報。</div>
+                            <div class="ink-line">如今您撒手人寰，</div>
+                            <div class="ink-line">留給我的，是無邊無際的黑夜，</div>
+                            <div class="ink-line">與再也無處安放的依恃。</div>
+                        </div>
+
+                        <div class="story-chapter" id="chap-1">
+                            <div class="ink-line chapter-title">赤足同行的歲月——青梅竹馬的「換帖」革命</div>
+                            <div class="ink-line">在您那段充滿風雨的歲月裡，</div>
+                            <div class="ink-line">最溫暖、最絢麗的一抹色彩，</div>
+                            <div class="ink-line">莫過於與春男伯父</div>
+                            <div class="ink-line">那段跨越八十年的換帖深情。</div>
+                            <div class="ink-line">那是多代同宗的血緣，</div>
+                            <div class="ink-line">幕後更是命中注定的靈魂相契。</div>
+                            <div class="ink-line">年齡相仿的你們，</div>
+                            <div class="ink-line">從小赤著腳在泥濘路上奔跑。</div>
+                            <div class="ink-line">上學時，共用橡皮、同讀一書；</div>
+                            <div class="ink-line">逃學時，躲在密林深處聽蟬鳴，</div>
+                            <div class="ink-line">看著天空分享少年的夢想。</div>
+                            <div class="ink-line">那時候的感情，純粹得像汪清泉。</div>
+                            <div class="ink-line">春男伯父家境殷實，</div>
+                            <div class="ink-line">而我們家卻常在溫飽線上掙扎。</div>
+                            <div class="ink-line">每當看到您挨餓，</div>
+                            <div class="ink-line">春男伯父總是瞞著家裡，</div>
+                            <div class="ink-line">偷偷摸摸地從懷裡掏出</div>
+                            <div class="ink-line">溫熱的番薯、白米飯或點心，</div>
+                            <div class="ink-line">塞進您的手裡。</div>
+                            <div class="ink-line">那不只是一口食物，</div>
+                            <div class="ink-line">那是危難之中的活命之恩，</div>
+                            <div class="ink-line">是孩子對孩子最真摯的疼惜。</div>
+                            <div class="ink-line">而您，父親，</div>
+                            <div class="ink-line">您骨子裡流淌著頂天立地的血性。</div>
+                            <div class="ink-line">您沒有金錢可以回報，</div>
+                            <div class="ink-line">便握緊了那雙堅硬的拳頭。</div>
+                            <div class="ink-line">只要有人敢欺負春男伯父，</div>
+                            <div class="ink-line">您總是第一個衝上前去，</div>
+                            <div class="ink-line">用身軀護他周全。</div>
+                            <div class="ink-line highlight">「你給我一餐飽食，我護你一生平安。」</div>
+                            <div class="ink-line">這種在匱乏歲月裡建立的默契，</div>
+                            <div class="ink-line">超越了物質的交換，</div>
+                            <div class="ink-line">演變成了一種革命情感。</div>
+                            <div class="ink-line">交女朋友時，互相出主意，</div>
+                            <div class="ink-line">在彼此青春留下了最美好的足跡。</div>
+                            <div class="ink-line">那時的你們，何曾想過今日？</div>
+                            <div class="ink-line">何曾想過死生契闊的永別？</div>
+                        </div>
+
+                        <div class="story-chapter" id="chap-2">
+                            <div class="ink-line chapter-title">商場浮沉，義字當頭——比親兄弟還親的脊樑</div>
+                            <div class="ink-line">長大後，命運將你們推向不同軌道，</div>
+                            <div class="ink-line">你們沒有選擇一起創業，</div>
+                            <div class="ink-line">卻在各自的戰場上，</div>
+                            <div class="ink-line">活成了彼此最堅實的後盾。</div>
+                            <div class="ink-line">商場如戰場，爾虞我詐，</div>
+                            <div class="ink-line">可在你們之間，從來只有一個義字。</div>
+                            <div class="ink-line">當春男伯父遇到危機、</div>
+                            <div class="ink-line">資金周轉不靈 or 決策迷茫時，</div>
+                            <div class="ink-line">您總是毫不猶豫地挺身而出，</div>
+                            <div class="ink-line">哪怕自己也身處險境。</div>
+                            <div class="ink-line">而當我們家遭遇風雨時，</div>
+                            <div class="ink-line">春男伯父的援手也從未遲到。</div>
+                            <div class="ink-line">你們在無數個深夜裡對酌，</div>
+                            <div class="ink-line">幾杯黃湯下肚，談驚濤駭浪，</div>
+                            <div class="ink-line">談的更是對彼此的牽掛。</div>
+                            <div class="ink-line">春男伯父常掛在嘴邊的一句話是：</div>
+                            <div class="ink-line highlight">「你爸爸，比我自己的親兄弟還要親。」</div>
+                            <div class="ink-line">這句話，多麼沉重，又多麼滾燙！</div>
+                            <div class="ink-line">在現實世界裡，兄弟鬩牆者有之，</div>
+                            <div class="ink-line">可你們卻把這份感情，</div>
+                            <div class="ink-line">淬鍊成了金石之堅。</div>
+                            <div class="ink-line">你們是用一生的時間，</div>
+                            <div class="ink-line">實踐著年少時在鄉野許下的諾言。</div>
+                            <div class="ink-line">那是一種不需要言語的信任——</div>
+                            <div class="ink-line">只要你需要，我隨時都在。</div>
+                            <div class="ink-line">這種革命情感，在歲月的洗禮下，</div>
+                            <div class="ink-line">早已模糊了家庭的界線。</div>
+                            <div class="ink-line">春男伯父的痛，</div>
+                            <div class="ink-line">是因為他失去了唯一懂他過去、</div>
+                            <div class="ink-line">參與他青春並肩作戰的戰友。</div>
+                            <div class="ink-line">父親走了，春男伯父的後半生，</div>
+                            <div class="ink-line">隨之缺了一角，再也無法填補。</div>
+                        </div>
+
+                        <div class="story-chapter" id="chap-3">
+                            <div class="ink-line chapter-title">相顧無言，唯有淚千行</div>
+                            <div class="ink-line highlight">「料得年年腸斷處，明月夜，短松岡。」</div>
+                            <div class="ink-line">父親，當我把您離去的消息</div>
+                            <div class="ink-line">告知春男伯父時，</div>
+                            <div class="ink-line">電話那頭短暫的死寂，</div>
+                            <div class="ink-line">隨後爆發出驚天動地的嚎啕大哭。</div>
+                            <div class="ink-line">那一聲聲哭喊，撕心裂肺，</div>
+                            <div class="ink-line">彷彿要把這八十年的歲月全哭碎。</div>
+                            <div class="ink-line">老淚縱橫，不勝唏噓。</div>
+                            <div class="ink-line">一個八十多歲的老人家，</div>
+                            <div class="ink-line">在人生的暮年，</div>
+                            <div class="ink-line">遭遇了最痛徹心扉的生離死別。</div>
+                            <div class="ink-line">那種久久不能平復的悲慟，</div>
+                            <div class="ink-line">是他對命運最無力的控訴。</div>
+                            <div class="ink-line">他哭的是您一生的辛苦，</div>
+                            <div class="ink-line">哭的是再也無法重聚的遺憾，</div>
+                            <div class="ink-line">哭的是天下沒有不散的宴席。</div>
+                            <div class="ink-line">我聽著那哭聲，淚水如決堤洪水。</div>
+                            <div class="ink-line">我心疼父親您的離世，</div>
+                            <div class="ink-line">更心疼春男伯父那孤單的身影。</div>
+                            <div class="ink-line">兩位老人，一生傲骨，</div>
+                            <div class="ink-line">卻在無常面前只能用眼淚送別。</div>
+                            <div class="ink-line">季世之中，真的還有如此真情。</div>
+                            <div class="ink-line">它沒有隨著時間流逝而淡化，</div>
+                            <div class="ink-line">反而爆發出了最悲壯的光芒。</div>
+                            <div class="ink-line chapter-title">悲愴長歌，恭送永恆情誼</div>
+                            <div class="ink-line">父親，您安心地走吧。</div>
+                            <div class="ink-line">您這一生的辛苦，有人懂，有人疼，</div>
+                            <div class="ink-line">有人為您落下了最真摯的老淚。</div>
+                            <div class="ink-line">春男伯父那不捨的訊息，</div>
+                            <div class="ink-line">便是您活在世上最好的墓誌銘。</div>
+                            <div class="ink-line">您們的這段兄弟情，</div>
+                            <div class="ink-line">將永遠鐫刻在晚輩的心中。</div>
+                            <div class="ink-line">它讓我們相信，冷酷人間裡，</div>
+                            <div class="ink-line">真的有一種感情叫生死之交；</div>
+                            <div class="ink-line">有一種陪伴叫八十載不離不棄。</div>
+                            <div class="ink-line highlight">嗚呼哀哉！伏惟尚饗。</div>
+                            <div class="ink-line">寒風颯颯，江水滔滔。</div>
+                            <div class="ink-line">今日一別，幽冥兩隔。</div>
+                            <div class="ink-line">父親，兒女在您的靈前長跪不起，</div>
+                            <div class="ink-line">願您一路走好，脫離苦海。</div>
+                            <div class="ink-line">春男伯父，請您節哀，</div>
+                            <div class="ink-line">保重這風燭殘年的身體。</div>
+                            <div class="ink-line">我父親在天之靈，</div>
+                            <div class="ink-line">定會如當年揮舞拳頭那般護你。</div>
+                            <div class="ink-line highlight">您們的革命情感將永不熄滅。</div>
+                            <div class="ink-line" style="font-weight: 700; color: var(--ink);">父親，謝謝您。兒女叩首恭送。</div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </main>
@@ -713,32 +925,30 @@
 
         <div class="sticky-bottom-bar">
             <a href="tel:0938179858" class="sticky-bar-btn s-btn-phone">
-                <img src="https://img.icons8.com/material-rounded/24/ffffff/phone.png" alt=""> 電話聯繫
+                <img src="https://img.icons8.com/material-rounded/24/ffffff/phone.png"> 電話聯繫
             </a>
             <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" rel="noopener" class="sticky-bar-btn s-btn-line">
-                <img src="https://img.icons8.com/material-rounded/24/ffffff/line-me.png" alt=""> LINE 諮詢
+                <img src="https://img.icons8.com/material-rounded/24/ffffff/line-me.png"> LINE 諮詢
             </a>
             <button onclick="toggleBgm()" id="audioBtn" class="sticky-bar-btn s-btn-audio">
-                <img src="https://img.icons8.com/material-rounded/24/272727/speaker.png" id="audioIcon" alt=""> <span id="audioText">播放音樂</span>
+                <img src="https://img.icons8.com/material-rounded/24/272727/speaker.png" id="audioIcon"> <span id="audioText">播放音樂</span>
             </button>
         </div>
     </div>
 
     <div id="lightbox" role="dialog" aria-modal="true">
-        <span class="lb-close" onclick="closeLightbox()">&times;</span>
-        <img id="lightbox-img" src="" alt="放大檢視">
+        <span class="lb-close" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="">
     </div>
 
     <script>
-        // ── 滾動漸顯動態 ──
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // 如果是書法區，逐字顯現
                     if (entry.target.classList.contains('calligraphy-area')) {
-                        animateCalligraphy();
+                        initAndWriteChapter(0);
                     }
                 }
             });
@@ -746,30 +956,108 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ── 書法逐字顯示邏輯 ──
-        function setupCalligraphy() {
-            const lines = document.querySelectorAll('.ink-line');
-            lines.forEach(line => {
-                const text = line.textContent.trim();
-                line.textContent = '';
-                for (let char of text) {
-                    const span = document.createElement('span');
-                    span.textContent = char;
-                    span.classList.add('ink-char');
-                    line.appendChild(span);
+        let writingTimeout = null;
+
+        function switchChapter(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach((tab, idx) => {
+                if (idx === index) tab.classList.add('active');
+                else tab.classList.remove('active');
+            });
+
+            const chapters = document.querySelectorAll('.story-chapter');
+            chapters.forEach((chap, idx) => {
+                if (idx === index) chap.classList.add('active');
+                else chap.classList.remove('active');
+            });
+
+            const container = document.getElementById('scrollContainer');
+            container.scrollLeft = container.scrollWidth;
+
+            initAndWriteChapter(index);
+        }
+
+        /* 💡 核心 JS 優化：物理隨機延遲算法，模擬書法提筆頓挫，完美去打字感 */
+        function initAndWriteChapter(index) {
+            if (writingTimeout) clearTimeout(writingTimeout);
+
+            const container = document.getElementById('scrollContainer');
+            const targetChapter = document.getElementById(`chap-${index}`);
+            const lines = targetChapter.querySelectorAll('.ink-line');
+            const textQueue = [];
+
+            lines.forEach((line) => {
+                if (line.querySelector('.ink-char')) {
+                    line.textContent = line.textContent; 
                 }
-            });
-        }
-        setupCalligraphy();
+                
+                const originalText = line.textContent;
+                line.textContent = '';
+                
+                const charSpans = [];
+                for (let char of originalText) {
+                    const span = document.createElement('span');
+                    span.className = 'ink-char';
+                    span.textContent = char;
+                    line.appendChild(span);
+                    charSpans.push(span);
+                }
+                
+                let type = 'normal';
+                if (line.classList.contains('chapter-title')) type = 'title';
+                if (line.classList.contains('highlight')) type = 'highlight';
 
-        function animateCalligraphy() {
-            const chars = document.querySelectorAll('.ink-char');
-            chars.forEach((char, index) => {
-                setTimeout(() => { char.classList.add('show'); }, index * 180);
+                textQueue.push({ lineElement: line, spans: charSpans, type: type });
             });
+
+            let currentLineIndex = 0;
+            let currentCharIndex = 0;
+
+            function writeNextChar() {
+                if (currentLineIndex >= textQueue.length) {
+                    document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 翻閱盡此生深情 ⟩";
+                    return;
+                }
+
+                document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 正在逐字雋刻 ⟩";
+                const currentLineData = textQueue[currentLineIndex];
+                const { lineElement, spans, type } = currentLineData;
+
+                if (currentCharIndex < spans.length) {
+                    spans[currentCharIndex].classList.add('inked');
+                    currentCharIndex++;
+
+                    const containerWidth = container.clientWidth;
+                    const lineLeft = lineElement.offsetLeft;
+                    
+                    container.scrollTo({
+                        left: lineLeft - containerWidth + 140,
+                        behavior: 'smooth'
+                    });
+
+                    // 💡 動態物理延遲計算法：依據不同文字屬性決定運筆時間
+                    let delay = 90; 
+                    if (type === 'title') delay = Math.random() * 90 + 160;      /* 大標題運筆沈穩偏慢 */
+                    if (type === 'highlight') delay = Math.random() * 80 + 90;   /* 金句悲愴有力，錯落有致 */
+                    if (type === 'normal') delay = Math.random() * 70 + 60;      /* 內文流暢自然 */
+
+                    // 遇到標點符號自動模擬「換行、沾墨與吸水停頓」
+                    const lastChar = spans[currentCharIndex - 1].textContent;
+                    if (['，', '。', '！', '、', '：', '」', '「'].includes(lastChar)) {
+                        delay += 450; 
+                    }
+
+                    writingTimeout = setTimeout(writeNextChar, delay);
+                } else {
+                    currentLineIndex++;
+                    currentCharIndex = 0;
+                    writingTimeout = setTimeout(writeNextChar, 500); /* 換行提筆停頓 */
+                }
+            }
+
+            writeNextChar();
         }
 
-        // ── 燈箱控制 ──
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
             document.getElementById('lightbox-img').src = src;
@@ -781,7 +1069,6 @@
             document.body.style.overflow = '';
         }
 
-        // ── 折疊面板 ──
         function toggleDrawer(btn, id) {
             const panel = document.getElementById(id);
             const isExpanded = btn.getAttribute('aria-expanded') === 'true';
@@ -797,7 +1084,6 @@
             }
         }
 
-        // ── 背景音樂切換 ──
         const bgm = document.getElementById('bgm');
         const audioBtn = document.getElementById('audioBtn');
         const audioText = document.getElementById('audioText');
@@ -820,7 +1106,6 @@
             }
         }
 
-        // ── Toast 提示功能 ──
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
@@ -828,9 +1113,8 @@
             setTimeout(() => { toast.classList.remove('show'); }, 2500);
         }
 
-        // ── 功能性按鈕 ──
         function copyText() {
-            const info = `【追思告別奠禮】\n逝者：陳哲雄 先生\n時間：民國 115 年 06 月 27 日 (六) 家奠 14:30 / 公奠 15:30\n地點：桃園殯儀館［景德廳］\n地址：桃園市桃園區大有路916號\n線上訃告：${window.location.href}`;
+            const info = `【追思告別奠禮】\n逝者：陳哲雄 先生\n時間：民國 115 年 06 月 27 日 (六) 家奠 14:30 / 公奠 15:30\n地點：桃園殯儀館［景德廳］\n線上訃告：${window.location.href}`;
             navigator.clipboard.writeText(info).then(() => {
                 showToast("📋 奠禮資訊已複製成功");
             }).catch(() => {
@@ -843,6 +1127,7 @@
             window.open(`https://line.me/R/msg/text/?【雲端追思訃告】敬邀親友陪伴陳哲雄先生走完塵世最後一趟旅程。%0A${url}`, '_blank');
         }
 
+        if(window.location.protocol === 'file:') { window.addCal = function() { showToast("📅 本地預覽不支援 ICS 下載"); } } else {
         function addCal() {
             showToast("📅 正在下載行事曆檔案...");
             const icsData = [
@@ -852,8 +1137,8 @@
                 "SUMMARY:【追思告別奠禮】陳哲雄 先生",
                 "DTSTART:20260627T143000",
                 "DTEND:20260627T163000",
-                "LOCATION:桃園殯儀館［景德廳］(桃園市桃園區大有路916號)",
-                "DESCRIPTION:家奠禮：14:30 \\n公奠禮：15:30 \\n請著整齊、樸素衣物出席。詳情請見雲端訃告。",
+                "LOCATION:桃園殯儀館［景德廳］",
+                "DESCRIPTION:家奠禮：14:30 \\n公奠禮：15:30 \\n詳情請見雲端訃告。",
                 "END:VEVENT",
                 "END:VCALENDAR"
             ].join("\n");
@@ -865,6 +1150,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
         }
     </script>
 </body>
