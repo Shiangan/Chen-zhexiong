@@ -1094,25 +1094,32 @@
     );
 }
 
-        // Add to Calendar (ICS generation)
-        function addCal() {
-            const event = {
-                title: '陳哲雄 先生 告別式',
-                start: '20260627T063000Z', // 14:30 Taipei Time (UTC+8) -> 06:30 UTC. Year 115 = 2026
-                end: '20260627T083000Z',   // 16:30 Taipei Time
-                location: '桃園殯儀館 景德廳 (桃園市桃園區大有路916號)',
-                description: '家奠禮 14:30 / 公奠禮 15:30'
-            };
-            const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTART:${event.start}\r\nDTEND:${event.end}\r\nLOCATION:${event.location}\r\nSUMMARY:${event.title}\r\nDESCRIPTION:${event.description}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
-            const blob = new Blob([ics], { type: 'text/calendar' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = '陳哲雄先生告別式.ics';
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('行事曆檔案已下載');
-        }
+function addCal() {
+
+    const title = encodeURIComponent(
+        '陳哲雄先生 告別式'
+    );
+
+    const details = encodeURIComponent(
+        '家奠禮 14:30\n公奠禮 15:30'
+    );
+
+    const location = encodeURIComponent(
+        '桃園殯儀館 景德廳 桃園市桃園區大有路916號'
+    );
+
+    const start = '20260627T063000Z';
+    const end   = '20260627T083000Z';
+
+    const calendarUrl =
+        `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+        `&text=${title}` +
+        `&dates=${start}/${end}` +
+        `&details=${details}` +
+        `&location=${location}`;
+
+    window.open(calendarUrl, '_blank');
+}
 
         // Background Music
         const bgm = document.getElementById('bgm');
