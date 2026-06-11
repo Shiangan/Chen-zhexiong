@@ -1183,6 +1183,26 @@ function addCal() {
         window.open(url,'_blank');
     }
 }
+                // Background Music
+        const bgm = document.getElementById('bgm');
+        let isPlaying = false;
+
+        function toggleBgm() {
+            if (isPlaying) {
+                bgm.pause();
+                document.getElementById('audioText').textContent = '播放音樂';
+                document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/speaker.png';
+            } else {
+                bgm.play().then(() => {
+                    document.getElementById('audioText').textContent = '暫停音樂';
+                    document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/mute.png';
+                }).catch(err => {
+                    showToast('請點擊畫面後再播放音樂');
+                });
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
     </script>
 </body>
 </html>
