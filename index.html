@@ -965,7 +965,8 @@
             threshold: 0.05
         };
 
-        let chapterPlayedMap = {};
+        let chapterWrappedMap  = {};  // 每章是否已拆字（只做一次）
+        let chapterProgressMap = {};  // 每章動畫跑到第幾個字
         let rafId = null;
 
         const observer = new IntersectionObserver((entries) => {
@@ -1011,32 +1012,39 @@
         }
 
         // =========================
-        // 🖌️ 書法逐字動畫
+        // 🖌️ 書法逐字動畫（支援中途切換後回來繼續跑）
         // =========================
         function initAndWriteChapter(index) {
             const chapter = document.getElementById(`chap-${index}`);
             if (!chapter) return;
 
-            // ✅ 每章只拆字一次，再開始動畫
-            if (!chapterPlayedMap[index]) {
+            // 停止目前正在跑的動畫（可能是別的章節）
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+
+            // 拆字只做一次
+            if (!chapterWrappedMap[index]) {
                 wrapChars(chapter);
-                chapterPlayedMap[index] = true;
-            } else {
-                // 已播放過，不重複動畫
-                return;
+                chapterWrappedMap[index] = true;
+                chapterProgressMap[index] = 0; // 初始化進度
             }
 
             const chars = chapter.querySelectorAll('.ink-char');
-            let i = 0;
+            const total = chars.length;
 
-            if (rafId) cancelAnimationFrame(rafId);
+            // 已全部播完，不重跑
+            if (chapterProgressMap[index] >= total) return;
+
+            // 從上次中斷的位置繼續
+            let i = chapterProgressMap[index];
 
             function typeWriter() {
                 const speed = 1;
-                for (let j = 0; j < speed && i < chars.length; j++, i++) {
+                for (let j = 0; j < speed && i < total; j++, i++) {
                     chars[i].classList.add('show');
                 }
-                if (i < chars.length) {
+                chapterProgressMap[index] = i; // 隨時記錄進度
+                if (i < total) {
                     rafId = requestAnimationFrame(typeWriter);
                 }
             }
