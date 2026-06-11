@@ -1085,8 +1085,10 @@
 
  function shareLine() {
 
-    const shareText = encodeURIComponent(
-`【追思】陳哲雄 先生
+    const url = encodeURIComponent(window.location.href);
+
+    const text = encodeURIComponent(
+`【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
 
@@ -1094,19 +1096,17 @@
 公奠禮：15:30
 
 地點：桃園殯儀館 景德廳
-地址：桃園市桃園區大有路916號
 
-雲端訃聞：`
+詳情請參閱雲端訃聞：`
     );
 
-    const url = encodeURIComponent(window.location.href);
-
     window.open(
-        `https://social-plugins.line.me/lineit/share?text=${shareText}%0A${url}`,
+        `https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`,
         '_blank'
     );
 }
 
+    
 function addCal() {
 
     const title = encodeURIComponent(
@@ -1121,19 +1121,15 @@ function addCal() {
         '桃園殯儀館 景德廳 桃園市桃園區大有路916號'
     );
 
-    const start = '20260627T063000Z';
-    const end   = '20260627T083000Z';
-
+    const start = '20260627T143000';
+    const end   = '20260627T163000';
     const calendarUrl =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE` +
-        `&text=${title}` +
-        `&dates=${start}/${end}` +
-        `&details=${details}` +
-        `&location=${location}`;
-
-    window.open(calendarUrl, '_blank');
-}
-
+`https://calendar.google.com/calendar/render?action=TEMPLATE
+&text=${title}
+&dates=${start}/${end}
+&details=${details}
+&location=${location}
+&ctz=Asia/Taipei`;
         // Background Music
         const bgm = document.getElementById('bgm');
         let isPlaying = false;
