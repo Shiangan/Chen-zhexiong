@@ -440,18 +440,36 @@
             border-radius: 2px;
         }
 
-        /* 🖋️ 核心優化：手寫毛筆揮毫感（非死板打字感） */
    .ink-char {
     opacity: 0;
-    transform: translateY(6px);
-    filter: blur(1px);
-    transition: all 0.25s ease;
+    transform: translateY(6px) scale(0.98);
+    filter: blur(2px);
+    display: inline-block;
 }
 
-.ink-char.inked {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
+.ink-char.show {
+    animation: inkWrite 0.45s ease forwards;
+}
+
+@keyframes inkWrite {
+    0% {
+        opacity: 0;
+        transform: translateY(6px) scale(0.97);
+        filter: blur(2px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(0px) scale(1.02);
+        filter: blur(0.5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+        filter: blur(0);
+    }
+}
 }
         #lightbox {
             position: fixed; inset: 0;
@@ -943,6 +961,8 @@
 
     <script>
         // =========================
+/<script>
+// =========================
 // Observer（穩定版）
 // =========================
 const observerOptions = {
@@ -994,59 +1014,50 @@ function switchChapter(index) {
 
 
 // =========================
-// 🖌️ 書法級動畫（升級版）
+// 🖌️ 最穩書法逐字動畫（不卡版本）
 // =========================
 function initAndWriteChapter(index) {
 
-    const activeChapter = document.getElementById(`chap-${index}`);
-    if (!activeChapter) return;
+    const chapter = document.getElementById(`chap-${index}`);
+    if (!chapter) return;
 
-    // ✔ 每章只播一次（安全控制）
+    // ✔ 每章只播放一次（避免重複）
     if (chapterPlayedMap[index]) return;
     chapterPlayedMap[index] = true;
 
-    const chars = activeChapter.querySelectorAll('.ink-char');
+    const chars = chapter.querySelectorAll('.ink-char');
 
     let i = 0;
 
-    // ✔ 停掉上一個動畫
+    // ✔ 停止上一個動畫
     if (rafId) cancelAnimationFrame(rafId);
 
-    function writeFrame() {
+    // =========================
+    // 核心：逐字控制器
+    // =========================
+    function typeWriter() {
 
-        // =========================
-        // ✨ 書法核心：控制筆速
-        // =========================
-        const speed = 1; // 1 = 最像真實毛筆
+        // ✔ 每幀顯示幾個字（1 = 最自然書法）
+        const speed = 1;
 
         for (let j = 0; j < speed && i < chars.length; j++, i++) {
 
             const el = chars[i];
 
-            // ✔ 墨水「先落後顯」
-            el.style.transition = "all 0.25s ease";
-
-            // ✔ 書法感（壓筆 + 位移 + 模糊收斂）
-            el.style.transform = `
-                translateY(${Math.random() * 2}px)
-                scale(${0.92 + Math.random() * 0.08})
-            `;
-
-            el.style.opacity = "1";
-            el.style.filter = "blur(0px)";
-
-            el.classList.add('inked');
+            // ✔ 不用直接寫 transform（避免跳）
+            el.classList.add('show');
         }
 
         if (i < chars.length) {
-            rafId = requestAnimationFrame(writeFrame);
+            rafId = requestAnimationFrame(typeWriter);
         }
     }
 
-    rafId = requestAnimationFrame(writeFrame);
+    rafId = requestAnimationFrame(typeWriter);
+
 
     // =========================
-    // scroll（完全不卡）
+    // scroll（不卡版本）
     // =========================
     const scrollContainer = document.getElementById('scrollContainer');
 
