@@ -15,15 +15,15 @@
         @font-face { font-family: 'Iansui';  src: url('Iansui-Regular.ttf') format('truetype'); font-display: swap; }
 
         :root {
-            --bg-deep:    #e4ddd0;
-            --paper:      #f0ebe1;
+            --bg-deep:     #e4ddd0;
+            --paper:       #f0ebe1;
             --card-inner: rgba(228, 221, 208, 0.55);
-            --ink:        #272727;
-            --gold-dark:  #8a6f57;
+            --ink:         #272727;
+            --gold-dark:   #8a6f57;
             --gold-light: #b09278;
-            --gold-pale:  #d4b99a;
-            --sub-ink:    #555555;
-            --max-w:      480px;
+            --gold-pale:   #d4b99a;
+            --sub-ink:     #555555;
+            --max-w:       480px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,6 +37,7 @@
             font-family: 'Iansui', 'Noto Serif TC', serif;
             line-height: 1.8;
             word-break: keep-all;
+            padding-bottom: 76px; /* 為底部固定列留出空間 */
         }
 
         .u-block { display: inline-block; white-space: nowrap; }
@@ -220,7 +221,7 @@
             font-weight: 600;
         }
 
-        /* 時間軸 */
+        /* 時間軸（優化為致中且不帶點的乾淨設計） */
         .time-timeline {
             margin: 24px 0 0;
             display: flex; flex-direction: column; align-items: stretch; gap: 0;
@@ -229,30 +230,22 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         .time-box {
-            display: flex; align-items: center;
+            display: flex; align-items: center; justify-content: center;
             background: var(--card-inner);
-            position: relative;
+            position: relative; padding: 18px 0;
         }
         .time-box + .time-box { border-top: 1px solid rgba(138,111,87,0.15); }
         .time-tag-wrap {
-            padding: 22px 18px;
-            background: rgba(138,111,87,0.06);
-            border-right: 1px solid rgba(138,111,87,0.15);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            min-width: 96px;
+            display: flex; align-items: center; justify-content: center;
+            padding-right: 20px; border-right: 1px solid rgba(138,111,87,0.2);
         }
         .time-tag {
-            font-size: 15px; color: var(--gold-dark);
-            font-weight: 700; letter-spacing: 3px; text-indent: 3px; text-align: center;
-        }
-        .time-dot {
-            width: 5px; height: 5px; border-radius: 50%;
-            background: var(--gold-pale); margin-top: 8px;
+            font-size: 16px; color: var(--gold-dark);
+            font-weight: 700; letter-spacing: 4px; text-indent: 4px; text-align: center;
         }
         .time-main {
-            font-size: 32px; font-weight: 900; color: var(--ink);
-            padding: 0 22px; line-height: 1;
+            font-size: 28px; font-weight: 700; color: var(--ink);
+            padding-left: 20px; line-height: 1;
             font-variant-numeric: tabular-nums; letter-spacing: 1px;
             font-family: 'Noto Serif TC', serif;
         }
@@ -425,7 +418,7 @@
         #lightbox .lb-close:hover { background: rgba(255,255,255,0.1); color: #fff; transform: rotate(90deg); }
 
         /* ══ Footer ══ */
-        .footer-wrap { padding: 40px 25px 120px; text-align: center; position: relative; }
+        .footer-wrap { padding: 40px 25px 40px; text-align: center; position: relative; }
         .footer-ornament {
             display: flex; align-items: center; justify-content: center;
             gap: 12px; margin-bottom: 24px;
@@ -446,7 +439,7 @@
 
         /* ══ Toast ══ */
         #toast {
-            position: fixed; bottom: 40px; left: 50%;
+            position: fixed; bottom: 90px; left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: rgba(38,38,38,0.96); color: #fff;
             padding: 14px 28px; border-radius: 30px;
@@ -460,6 +453,29 @@
         }
         #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+        /* ══ 底部固定聯絡列 ══ */
+        .sticky-bottom-bar {
+            position: fixed; bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100%; max-width: var(--max-w);
+            height: 68px; background: rgba(240, 235, 225, 0.88);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(138, 111, 87, 0.2);
+            display: grid; grid-template-columns: 1fr 1.2fr 1fr;
+            padding: 8px 12px; gap: 10px; z-index: 400;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+        }
+        .sticky-bar-btn {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            border-radius: 34px; font-size: 13.5px; font-weight: 700;
+            text-decoration: none; font-family: inherit; transition: all 0.2s ease;
+            cursor: pointer; border: none;
+        }
+        .s-btn-phone { background: var(--gold-dark); color: #fff; }
+        .s-btn-line { background: #4a5d4e; color: #fff; }
+        .s-btn-audio { background: rgba(138, 111, 87, 0.12); color: var(--ink); border: 1px solid rgba(138, 111, 87, 0.2); }
+        .sticky-bar-btn img { width: 15px; height: 15px; }
+
         /* 進場動畫 */
         @keyframes fadeDown {
             from { opacity: 0; transform: translateY(-16px); }
@@ -469,28 +485,26 @@
         header      { animation: fadeDown 1s ease both; animation-delay: 0.35s; opacity: 0; }
 
         @media (max-width: 360px) {
-            .time-tag  { font-size: 13.5px; }
-            .time-main { font-size: 28px; }
+            .time-tag  { font-size: 14px; }
+            .time-main { font-size: 24px; }
             .ink-wrap  { gap: 12px; }
             .ink-line  { font-size: 19px; }
+            .sticky-bar-btn { font-size: 12px; gap: 4px; }
         }
     </style>
 </head>
 
 <body>
-    <!-- 背景音樂 -->
-    <audio id="bgm" loop preload="none">
+    <audio id="bgm" loop preload="auto">
         <source src="Misson Part 1.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- 提示彈窗 -->
     <div id="toast"></div>
 
     <div class="app-wrapper">
         <div class="top-glow" aria-hidden="true"></div>
         <div class="bg-watermark" aria-hidden="true">MEMORY</div>
 
-        <!-- ── 頂部操作列 ── -->
         <div class="header-top">
             <img src="image/logo.ico" class="top-logo" alt="祥安生命 Logo">
             <div class="top-action-bar">
@@ -503,7 +517,6 @@
             </div>
         </div>
 
-        <!-- ── 主標題 ── -->
         <header>
             <div class="header-ornament" aria-hidden="true">
                 <span></span><span></span><span></span>
@@ -515,7 +528,6 @@
         </header>
 
         <main>
-            <!-- ── § 告別式說明 ── -->
             <section class="reveal" aria-label="告別式說明">
                 <div class="photo-frame">
                     <img src="image/IMG_9262.jpeg" class="img-inner" onclick="openLightbox(this.src)" alt="陳哲雄 先生尊照">
@@ -528,8 +540,8 @@
                         我最敬愛的父親<br>
                         <span class="u-block" style="font-weight:700; color:var(--ink); font-size:1.15em;">陳哲雄 先生</span><br>
                         於家人們的陪伴與思念中，<br>
-                        <span class="u-block">圓滿塵世旅程，安祥辭世，</span><br>
-                        <span class="u-block">留下的溫慢與教誨，將永遠照亮我們。</span><br><br>
+                        <span class="u-block">圓慢塵世旅程，安祥辭世，</span><br>
+                        <span class="u-block">留下的溫暖與教誨，將永遠照亮我們。</span><br><br>
                         謹擇於<br>
                         <span class="u-block" style="color:var(--ink); font-weight:700;">民國 115 年 06 月 27 日（星期六）</span>，<br>
                         於 <span class="u-block" style="color:var(--ink); font-weight:700;">桃園殯儀館</span><br>
@@ -543,7 +555,6 @@
                 <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
             </div>
 
-            <!-- ── § 訃告正本 ── -->
             <section class="reveal" aria-label="訃告正本">
                 <span class="section-title">訃告正本公告</span>
                 <div class="obituary-wrap">
@@ -556,7 +567,6 @@
                 <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
             </div>
 
-            <!-- ── § 儀程 ── -->
             <section class="reveal" aria-label="追思奠禮儀程">
                 <span class="section-title">追思奠禮 ‧ 儀程</span>
 
@@ -574,14 +584,12 @@
                     <div class="time-box" role="listitem">
                         <div class="time-tag-wrap">
                             <span class="time-tag">家奠禮</span>
-                            <div class="time-dot"></div>
                         </div>
-                        <span class="time-main" aria-label="下午二時三十分">14：30</span>
+                        <span class="time-main" aria-label="下午二時三行為">14：30</span>
                     </div>
                     <div class="time-box" role="listitem">
                         <div class="time-tag-wrap">
                             <span class="time-tag">公奠禮</span>
-                            <div class="time-dot"></div>
                         </div>
                         <span class="time-main" aria-label="下午三時三十分">15：30</span>
                     </div>
@@ -599,7 +607,7 @@
                     <div class="notice-item">殯儀館內請勿說「再見」，以「平安」代替即可。</div>
                     <div class="notice-item">奠禮會場備有淨水，若有需要可以自行取用。</div>
                     <div class="notice-item">若因宗教信仰不方便持香，與工作人員示意即可。</div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=桃園市立殯儀館"
+                    <a href="https://maps.google.com/?q=桃園殯儀館"
                        target="_blank" rel="noopener"
                        class="btn-action btn-outline">📍 開啟地圖導航（桃園殯儀館）</a>
                 </div>
@@ -611,11 +619,9 @@
                 <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
             </div>
 
-            <!-- ── 第四節：致意資訊 ── -->
             <section class="reveal" aria-label="致意資訊">
                 <span class="section-title">致意資訊導引</span>
 
-                <!-- 花禮 -->
                 <div class="tool-drawer">
                     <button class="drawer-btn" onclick="toggleDrawer(this,'flower')" aria-expanded="false" aria-controls="flower">
                         致意花禮樣式
@@ -667,7 +673,6 @@
                     </div>
                 </div>
 
-                <!-- 交通位置圖 -->
                 <div class="tool-drawer">
                     <button class="drawer-btn" onclick="toggleDrawer(this,'map_ref')" aria-expanded="false" aria-controls="map_ref">
                         會場交通位置圖
@@ -686,181 +691,181 @@
                 </div>
             </section>
 
-            <!-- ── 書法致謝區 ── -->
-            <div class="calligraphy-area" id="thanksSec" aria-label="家眷致謝">
-                <div class="ink-wrap" aria-hidden="true">
-                    <div class="ink-line" data-text="致 每一位溫慢的您"></div>
-                    <div class="ink-line" data-text="謝謝這段日子的關懷與陪伴"></div>
-                    <div class="ink-line" data-text="每一句問候 每一份情誼"></div>
-                    <div class="ink-line" data-text="都在我們心中 化作最慢的光"></div>
-                    <div class="ink-line" data-text="這份真誠厚情 我們將永誌於心"></div>
-                    <div class="ink-line" data-text="願 每一位親友平安順心"></div>
-                    <div class="ink-line" data-text="全體家眷 叩謝" style="margin-top:120px; color:var(--ink); font-weight:700;"></div>
-                </div>
+            <div class="section-divider" aria-hidden="true">
+                <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
             </div>
 
-            <!-- ── 結尾裝飾 ── -->
-            <div class="footer-wrap">
-                <div class="footer-ornament" aria-hidden="true">
-                    <div class="footer-ornament-diamond"><span></span><span></span><span></span></div>
+            <div class="calligraphy-area reveal">
+                <div class="ink-wrap">
+                    <div class="ink-line" style="font-size: 24px; color: var(--ink); font-weight: 600;">生如夏花之絢爛</div>
+                    <div class="ink-line">逝如秋葉之靜美</div>
+                    <div class="ink-line" style="margin-right:20px;">思念無盡 ‧ 精神長存</div>
                 </div>
-                <footer>祥安生命有限公司</footer>
             </div>
         </main>
+
+        <div class="footer-wrap">
+            <div class="footer-ornament" aria-hidden="true">
+                <div class="footer-ornament-diamond"><span></span><span></span><span></span></div>
+            </div>
+            <footer>祥安生命 敬製</footer>
+        </div>
+
+        <div class="sticky-bottom-bar">
+            <a href="tel:0938179858" class="sticky-bar-btn s-btn-phone">
+                <img src="https://img.icons8.com/material-rounded/24/ffffff/phone.png" alt=""> 電話聯繫
+            </a>
+            <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" rel="noopener" class="sticky-bar-btn s-btn-line">
+                <img src="https://img.icons8.com/material-rounded/24/ffffff/line-me.png" alt=""> LINE 諮詢
+            </a>
+            <button onclick="toggleBgm()" id="audioBtn" class="sticky-bar-btn s-btn-audio">
+                <img src="https://img.icons8.com/material-rounded/24/272727/speaker.png" id="audioIcon" alt=""> <span id="audioText">播放音樂</span>
+            </button>
+        </div>
     </div>
 
-    <!-- Lightbox 燈箱元件 -->
-    <div id="lightbox" onclick="closeLightbox()">
+    <div id="lightbox" role="dialog" aria-modal="true">
         <span class="lb-close" onclick="closeLightbox()">&times;</span>
-        <img id="lb-img" src="" alt="放大圖示">
+        <img id="lightbox-img" src="" alt="放大檢視">
     </div>
 
-    <!-- ══ JavaScript 核心邏輯處理 ══ -->
     <script>
-        // 防止手機右鍵選單彈出
-        document.addEventListener('contextmenu', e => e.preventDefault());
-
-        // 自動播放背景音樂（因瀏覽器限制，會在使用者第一次點擊網頁時觸發播放）
-        function initMusic() {
-            const bgm = document.getElementById('bgm');
-            if (bgm) {
-                bgm.volume = 0.4;
-                const playBGM = () => {
-                    bgm.play().catch(() => {});
-                    document.removeEventListener('click', playBGM);
-                    document.removeEventListener('touchstart', playBGM);
-                };
-                document.addEventListener('click', playBGM);
-                document.addEventListener('touchstart', playBGM);
-            }
-        }
-        window.addEventListener('DOMContentLoaded', initMusic);
-
-        // Toast 訊息提示
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-
-        // 複製奠禮資訊
-        function copyText() {
-            const infoText = `【追思告別奠禮】\n逝者：陳哲雄 先生\n時間：民國115年06月27日(星期六) 家奠14:30 / 公奠15:30\n地點：桃園殯儀館［景德廳］(桃園市桃園區大有路916號)\n平日安靈地點：桃園市蘆竹區五福里中山路87巷1弄16號`;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(infoText).then(() => showToast('奠禮資訊已複製')).catch(() => fallbackCopy(infoText));
-            } else {
-                fallbackCopy(infoText);
-            }
-        }
-        function fallbackCopy(text) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed'; opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            try {
-                document.execCommand('copy');
-                showToast('奠禮資訊已複製');
-            } catch (err) {
-                showToast('複製失敗，請手動選取文字');
-            }
-            document.body.removeChild(ta);
-        }
-
-        // LINE 分享親友
-        function shareLine() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent('【追思】陳哲雄 先生 雲端訃告\n敬邀親友們，陪伴陳哲雄先生走完塵世最後一趟旅程。');
-            window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank');
-        }
-
-        // 加入手機行事曆 (Google Calendar)
-        function addCal() {
-            const title = encodeURIComponent('【追思奠禮】陳哲雄 先生');
-            const details = encodeURIComponent('家奠禮 14:30 / 公奠禮 15:30\n地點：桃園殯儀館［景德廳］');
-            const location = encodeURIComponent('桃園殯儀館景德廳(桃園市桃園區大有路916號)');
-            const dates = '20260627T143000/20260627T170000'; // 格式：YYYYMMDDTHHMMSS
-            const gCalUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
-            window.open(gCalUrl, '_blank');
-        }
-
-        // Drawer 折疊面板切換
-        function toggleDrawer(btn, targetId) {
-            const content = document.getElementById(targetId);
-            const isOpen = content.classList.contains('open');
-            
-            // 關閉目前狀態
-            if (isOpen) {
-                content.classList.remove('open');
-                btn.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-            } else {
-                content.classList.add('open');
-                btn.classList.add('open');
-                btn.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        // Lightbox 燈箱控制
-        function openLightbox(src) {
-            const lb = document.getElementById('lightbox');
-            const img = document.getElementById('lb-img');
-            img.src = src;
-            lb.classList.add('active');
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
-        // 建立書法文字結構
-        function buildCalligraphy() {
-            const lines = document.querySelectorAll('.ink-line');
-            lines.forEach(line => {
-                const text = line.getAttribute('data-text');
-                line.innerHTML = '';
-                [...text].forEach(char => {
-                    const span = document.createElement('span');
-                    span.className = 'ink-char';
-                    span.textContent = char;
-                    line.appendChild(span);
-                });
-            });
-        }
-        buildCalligraphy();
-
-        // 書法逐字浮現動畫效果
-        function triggerCalligraphy(sec) {
-            if (sec.classList.contains('animated')) return;
-            sec.classList.add('animated');
-            const lines = sec.querySelectorAll('.ink-line');
-            let globalDelay = 0;
-
-            lines.forEach(line => {
-                const chars = line.querySelectorAll('.ink-char');
-                chars.forEach((char, index) => {
-                    setTimeout(() => {
-                        char.classList.add('show');
-                    }, globalDelay + (index * 140)); // 每個字產生的間隔時間
-                });
-                globalDelay += (chars.length * 140) + 400; // 換行間隔緩衝
-            });
-        }
-
-        // 捲動偵測（動態進場）
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+        // ── 滾動漸顯動態 ──
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    if (entry.target.id === 'thanksSec') {
-                        triggerCalligraphy(entry.target);
+                    // 如果是書法區，逐字顯現
+                    if (entry.target.classList.contains('calligraphy-area')) {
+                        animateCalligraphy();
                     }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal, .calligraphy-area').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ── 書法逐字顯示邏輯 ──
+        function setupCalligraphy() {
+            const lines = document.querySelectorAll('.ink-line');
+            lines.forEach(line => {
+                const text = line.textContent.trim();
+                line.textContent = '';
+                for (let char of text) {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.classList.add('ink-char');
+                    line.appendChild(span);
+                }
+            });
+        }
+        setupCalligraphy();
+
+        function animateCalligraphy() {
+            const chars = document.querySelectorAll('.ink-char');
+            chars.forEach((char, index) => {
+                setTimeout(() => { char.classList.add('show'); }, index * 180);
+            });
+        }
+
+        // ── 燈箱控制 ──
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ── 折疊面板 ──
+        function toggleDrawer(btn, id) {
+            const panel = document.getElementById(id);
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                panel.classList.add('open');
+                btn.classList.add('open');
+                btn.querySelector('.toggle-icon').textContent = '×';
+            } else {
+                panel.classList.remove('open');
+                btn.classList.remove('open');
+                btn.querySelector('.toggle-icon').textContent = '+';
+            }
+        }
+
+        // ── 背景音樂切換 ──
+        const bgm = document.getElementById('bgm');
+        const audioBtn = document.getElementById('audioBtn');
+        const audioText = document.getElementById('audioText');
+        const audioIcon = document.getElementById('audioIcon');
+
+        function toggleBgm() {
+            if (bgm.paused) {
+                bgm.play().then(() => {
+                    audioText.textContent = "暫停音樂";
+                    audioIcon.src = "https://img.icons8.com/material-rounded/24/272727/mute.png";
+                    showToast("🎵 播放懷念樂章");
+                }).catch(err => {
+                    showToast("瀏覽器限制，請再試一次");
+                });
+            } else {
+                bgm.pause();
+                audioText.textContent = "播放音樂";
+                audioIcon.src = "https://img.icons8.com/material-rounded/24/272727/speaker.png";
+                showToast("🔇 音樂已暫停");
+            }
+        }
+
+        // ── Toast 提示功能 ──
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+        }
+
+        // ── 功能性按鈕 ──
+        function copyText() {
+            const info = `【追思告別奠禮】\n逝者：陳哲雄 先生\n時間：民國 115 年 06 月 27 日 (六) 家奠 14:30 / 公奠 15:30\n地點：桃園殯儀館［景德廳］\n地址：桃園市桃園區大有路916號\n線上訃告：${window.location.href}`;
+            navigator.clipboard.writeText(info).then(() => {
+                showToast("📋 奠禮資訊已複製成功");
+            }).catch(() => {
+                showToast("複製失敗，請手動複製");
+            });
+        }
+
+        function shareLine() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://line.me/R/msg/text/?【雲端追思訃告】敬邀親友陪伴陳哲雄先生走完塵世最後一趟旅程。%0A${url}`, '_blank');
+        }
+
+        function addCal() {
+            showToast("📅 正在下載行事曆檔案...");
+            const icsData = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "BEGIN:VEVENT",
+                "SUMMARY:【追思告別奠禮】陳哲雄 先生",
+                "DTSTART:20260627T143000",
+                "DTEND:20260627T163000",
+                "LOCATION:桃園殯儀館［景德廳］(桃園市桃園區大有路916號)",
+                "DESCRIPTION:家奠禮：14:30 \\n公奠禮：15:30 \\n請著整齊、樸素衣物出席。詳情請見雲端訃告。",
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\n");
+            
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = '陳哲雄先生追思奠禮.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
