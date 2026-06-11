@@ -9,7 +9,7 @@
     <meta property="og:image" content="image/Write.png">
     <meta property="og:type" content="website">
     <title>永恆思念：陳哲雄 先生</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght=300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         @font-face { font-family: 'ZF-Font'; src: url('Zf-Font.ttf') format('truetype'); font-display: swap; }
         @font-face { font-family: 'Iansui';  src: url('Iansui-Regular.ttf') format('truetype'); font-display: swap; }
@@ -353,7 +353,7 @@
         }
         .c-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* ═══ 終極優化：書法直排高度優化與安全高度防裁切 ═══ */
+        /* ═══ 書法直排區 ═══ */
         .calligraphy-area {
             padding: 50px 0 35px;
             opacity: 0; transform: translateY(24px); position: relative;
@@ -364,7 +364,7 @@
             border-bottom: 1px solid rgba(138,111,87,0.1);
         }
         .calligraphy-area.visible { opacity: 1; transform: translateY(0); }
-        
+
         .scroll-hint {
             text-align: center; font-size: 13px; color: var(--gold-dark);
             margin-bottom: 20px; letter-spacing: 3px; font-weight: 600;
@@ -387,20 +387,18 @@
             border-color: var(--gold-dark); box-shadow: 0 3px 10px rgba(138,111,87,0.25);
         }
 
-        /* 橫向卷軸容器：微調高度與內距 */
         .scroll-container {
             width: 100%; overflow-x: auto; overflow-y: hidden;
-            padding: 15px 24px 25px; 
+            padding: 15px 24px 25px;
             -webkit-overflow-scrolling: touch;
         }
         .scroll-container::-webkit-scrollbar { height: 4px; }
         .scroll-container::-webkit-scrollbar-track { background: transparent; }
         .scroll-container::-webkit-scrollbar-thumb { background: var(--gold-pale); border-radius: 2px; }
 
-        /* 經摺裝主結構 */
         .ink-wrap {
             display: flex; flex-direction: row-reverse;
-            gap: 28px; 
+            gap: 28px;
             height: fit-content;
             width: max-content; padding-left: 40px; padding-right: 20px;
         }
@@ -410,25 +408,23 @@
         }
         .story-chapter.active { display: flex; }
 
-        /* 🖋️ 核心 CSS 優化：防遮擋、防吃字、手寫動態載體 */
         .ink-line {
-            writing-mode: vertical-rl; 
+            writing-mode: vertical-rl;
             -webkit-writing-mode: vertical-rl;
-            font-family: 'Iansui', '書寫', 'ZF-Font', 'Noto Serif TC', serif;
+            font-family: 'Iansui', 'ZF-Font', 'Noto Serif TC', serif;
             font-size: clamp(12px, 4vw, 17.5px); letter-spacing: 5px; color: var(--sub-ink);
             line-height: 1.8; white-space: nowrap;
             display: inline-block; text-align: left;
             height: auto;
-            max-height: none; /* 安全單行最高上限 */
-            padding-bottom: 20px; /* 預留底部絕對安全空白，絕不被擋字 */
+            max-height: none;
+            padding-bottom: 20px;
         }
 
-        /* 修正重點：加大標題左右間距(直排為前後行)，徹底解決擋道吃字 */
         .ink-line.chapter-title {
             font-size: 20px; color: var(--gold-dark); font-weight: 700;
-            letter-spacing: 6px; 
-            margin-left: 24px;   /* 增加左側間距（前行內文與此標題的距離）*/
-            margin-right: 12px;  /* 增加右側間距（此標題與後續內文的距離）*/
+            letter-spacing: 6px;
+            margin-left: 24px;
+            margin-right: 12px;
             border-left: 1px dashed rgba(138,111,87,0.3);
             padding-left: 16px;
             padding-bottom: 60px;
@@ -440,36 +436,38 @@
             border-radius: 2px;
         }
 
-   .ink-char {
-    opacity: 0;
-    transform: translateY(6px) scale(0.98);
-    filter: blur(2px);
-    display: inline-block;
-}
+        /* ✅ 修正：.ink-char 動畫（補上遺漏的閉合大括號） */
+        .ink-char {
+            opacity: 0;
+            transform: translateY(6px) scale(0.98);
+            filter: blur(2px);
+            display: inline-block;
+        }
 
-.ink-char.show {
-    animation: inkWrite 0.45s ease forwards;
-}
+        .ink-char.show {
+            animation: inkWrite 0.45s ease forwards;
+        }
 
-@keyframes inkWrite {
-    0% {
-        opacity: 0;
-        transform: translateY(6px) scale(0.97);
-        filter: blur(2px);
-    }
+        /* ✅ 修正：@keyframes 補上正確的閉合大括號 */
+        @keyframes inkWrite {
+            0% {
+                opacity: 0;
+                transform: translateY(6px) scale(0.97);
+                filter: blur(2px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(0px) scale(1.02);
+                filter: blur(0.5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px) scale(1);
+                filter: blur(0);
+            }
+        }
 
-    60% {
-        opacity: 1;
-        transform: translateY(0px) scale(1.02);
-        filter: blur(0.5px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0px) scale(1);
-        filter: blur(0);
-    }
-
+        /* Lightbox */
         #lightbox {
             position: fixed; inset: 0;
             background: rgba(15,15,15,0.96);
@@ -539,7 +537,7 @@
             .time-main { font-size: 24px; }
             .scroll-container { padding: 10px 16px 30px; }
             .ink-wrap  { gap: 20px; }
-            .ink-line  { font-size: 15.5px; padding-bottom: 50px; max-height: 290px; }
+            .ink-line  { font-size: 15.5px; padding-bottom: 50px; }
             .ink-line.chapter-title { font-size: 18px; padding-bottom: 50px; margin-left: 16px; margin-right: 8px; }
         }
     </style>
@@ -549,7 +547,7 @@
     <audio id="bgm" loop preload="auto">
         <source src="Misson Part 1.mp3" type="audio/mpeg">
     </audio>
-    
+
     <div id="toast"></div>
 
     <div class="app-wrapper">
@@ -607,14 +605,12 @@
             </div>
 
             <section class="reveal" aria-label="訃告正本">
-    <span class="section-title">訃告正本公告</span>
-    <!-- 修改這裡：將 onclick 移到 div，並加入 data-src -->
-    <div class="obituary-wrap" onclick="openLightbox(this.querySelector('img').src)" style="cursor: pointer;">
-        <img src="image/IMG_9275.jpeg" class="obituary-img" alt="訃告正本">
-    </div>
-    <p class="zoom-hint">（ 點擊圖片或周圍可放大閱讀 ）</p>
-</section>
-
+                <span class="section-title">訃告正本公告</span>
+                <div class="obituary-wrap" onclick="openLightbox(this.querySelector('img').src)" style="cursor: pointer;">
+                    <img src="image/IMG_9275.jpeg" class="obituary-img" alt="訃告正本">
+                </div>
+                <p class="zoom-hint">（ 點擊圖片或周圍可放大閱讀 ）</p>
+            </section>
 
             <div class="section-divider" aria-hidden="true">
                 <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
@@ -718,7 +714,7 @@
 
             <div class="calligraphy-area reveal">
                 <p class="scroll-hint" id="scrollHint">⟨ 歲月長卷 ‧ 點選章節翻閱深情 ⟩</p>
-                
+
                 <div class="story-tabs">
                     <button class="tab-btn active" onclick="switchChapter(0)">一、痛徹心髓</button>
                     <button class="tab-btn" onclick="switchChapter(1)">二、赤足同行</button>
@@ -728,7 +724,7 @@
 
                 <div class="scroll-container" id="scrollContainer">
                     <div class="ink-wrap" id="storyInkWrap">
-                        
+
                         <div class="story-chapter active" id="chap-0">
                             <div class="ink-line chapter-title">痛徹心髓：送別一生摯友與慈父</div>
                             <div class="ink-line">江城如夢，夜雨霖鈴。</div>
@@ -960,116 +956,107 @@
 
     <script>
         // =========================
-/
-// =========================
-// Observer（穩定版）
-// =========================
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.05
-};
+        // ✅ 修正一：移除原本孤立的 / 斜線，改為正確的區塊標題註解
+        // Observer（穩定版）
+        // =========================
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.05
+        };
 
-let chapterPlayedMap = {};
-let rafId = null;
+        let chapterPlayedMap = {};
+        let rafId = null;
 
-const observer = new IntersectionObserver((entries) => {
-
-    entries.forEach(entry => {
-
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add('visible');
-
-        if (entry.target.classList.contains('calligraphy-area')) {
-            initAndWriteChapter(0);
-        }
-    });
-
-}, observerOptions);
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-
-// =========================
-// Chapter switching
-// =========================
-let currentChapter = 0;
-
-function switchChapter(index) {
-
-    currentChapter = index;
-
-    document.querySelectorAll('.tab-btn').forEach((tab, idx) => {
-        tab.classList.toggle('active', idx === index);
-    });
-
-    document.querySelectorAll('.story-chapter').forEach((chap, idx) => {
-        chap.classList.toggle('active', idx === index);
-    });
-
-    initAndWriteChapter(index);
-}
-
-
-// =========================
-// 🖌️ 最穩書法逐字動畫（不卡版本）
-// =========================
-function initAndWriteChapter(index) {
-
-    const chapter = document.getElementById(`chap-${index}`);
-    if (!chapter) return;
-
-    // ✔ 每章只播放一次（避免重複）
-    if (chapterPlayedMap[index]) return;
-    chapterPlayedMap[index] = true;
-
-    const chars = chapter.querySelectorAll('.ink-char');
-
-    let i = 0;
-
-    // ✔ 停止上一個動畫
-    if (rafId) cancelAnimationFrame(rafId);
-
-    // =========================
-    // 核心：逐字控制器
-    // =========================
-    function typeWriter() {
-
-        // ✔ 每幀顯示幾個字（1 = 最自然書法）
-        const speed = 1;
-
-        for (let j = 0; j < speed && i < chars.length; j++, i++) {
-
-            const el = chars[i];
-
-            // ✔ 不用直接寫 transform（避免跳）
-            el.classList.add('show');
-        }
-
-        if (i < chars.length) {
-            rafId = requestAnimationFrame(typeWriter);
-        }
-    }
-
-    rafId = requestAnimationFrame(typeWriter);
-
-
-    // =========================
-    // scroll（不卡版本）
-    // =========================
-    const scrollContainer = document.getElementById('scrollContainer');
-
-    if (scrollContainer) {
-        requestAnimationFrame(() => {
-            scrollContainer.scrollTo({
-                left: scrollContainer.scrollWidth,
-                behavior: 'auto'
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                if (entry.target.classList.contains('calligraphy-area')) {
+                    initAndWriteChapter(0);
+                }
             });
-        });
-    }
-}
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // =========================
+        // Chapter switching
+        // =========================
+        let currentChapter = 0;
+
+        function switchChapter(index) {
+            currentChapter = index;
+            document.querySelectorAll('.tab-btn').forEach((tab, idx) => {
+                tab.classList.toggle('active', idx === index);
+            });
+            document.querySelectorAll('.story-chapter').forEach((chap, idx) => {
+                chap.classList.toggle('active', idx === index);
+            });
+            initAndWriteChapter(index);
+        }
+
+        // =========================
+        // ✅ 修正三：加入 wrapChars() 動態拆字，讓 .ink-char 動畫正確執行
+        // =========================
+        function wrapChars(chapter) {
+            chapter.querySelectorAll('.ink-line').forEach(line => {
+                // 避免重複 wrap
+                if (line.querySelector('.ink-char')) return;
+                const text = line.textContent;
+                line.innerHTML = [...text].map(
+                    ch => `<span class="ink-char">${ch}</span>`
+                ).join('');
+            });
+        }
+
+        // =========================
+        // 🖌️ 書法逐字動畫
+        // =========================
+        function initAndWriteChapter(index) {
+            const chapter = document.getElementById(`chap-${index}`);
+            if (!chapter) return;
+
+            // ✅ 每章只拆字一次，再開始動畫
+            if (!chapterPlayedMap[index]) {
+                wrapChars(chapter);
+                chapterPlayedMap[index] = true;
+            } else {
+                // 已播放過，不重複動畫
+                return;
+            }
+
+            const chars = chapter.querySelectorAll('.ink-char');
+            let i = 0;
+
+            if (rafId) cancelAnimationFrame(rafId);
+
+            function typeWriter() {
+                const speed = 1;
+                for (let j = 0; j < speed && i < chars.length; j++, i++) {
+                    chars[i].classList.add('show');
+                }
+                if (i < chars.length) {
+                    rafId = requestAnimationFrame(typeWriter);
+                }
+            }
+
+            rafId = requestAnimationFrame(typeWriter);
+
+            const scrollContainer = document.getElementById('scrollContainer');
+            if (scrollContainer) {
+                requestAnimationFrame(() => {
+                    scrollContainer.scrollTo({
+                        left: scrollContainer.scrollWidth,
+                        behavior: 'auto'
+                    });
+                });
+            }
+        }
+
+        // =========================
         // Lightbox
+        // =========================
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
@@ -1083,20 +1070,17 @@ function initAndWriteChapter(index) {
             lb.classList.remove('active');
             document.body.style.overflow = '';
         }
-        
+
         document.getElementById('lightbox').addEventListener('click', function(e) {
             if (e.target === this) closeLightbox();
         });
 
+        // =========================
         // Drawer Toggle
+        // =========================
         function toggleDrawer(btn, id) {
             const content = document.getElementById(id);
             const isOpen = content.classList.contains('open');
-            
-            // Close all drawers first (optional, if you want accordion behavior)
-            // document.querySelectorAll('.drawer-content').forEach(c => c.classList.remove('open'));
-            // document.querySelectorAll('.drawer-btn').forEach(b => b.classList.remove('open'));
-            
             if (isOpen) {
                 content.classList.remove('open');
                 btn.classList.remove('open');
@@ -1106,19 +1090,21 @@ function initAndWriteChapter(index) {
             }
         }
 
+        // =========================
         // Toast
+        // =========================
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
         }
 
-function copyText() {
-
-    const text =
+        // =========================
+        // Copy
+        // =========================
+        function copyText() {
+            const text =
 `【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
@@ -1133,31 +1119,24 @@ function copyText() {
 雲端訃聞：
 ${window.location.href}`;
 
-    navigator.clipboard.writeText(text)
-        .then(() => {
+            navigator.clipboard.writeText(text)
+                .then(() => { showToast('已複製完整告別式資訊'); })
+                .catch(() => {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    showToast('已複製完整告別式資訊');
+                });
+        }
 
-            showToast('已複製完整告別式資訊');
-
-        })
-        .catch(() => {
-
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-
-            document.body.appendChild(textarea);
-
-            textarea.select();
-
-            document.execCommand('copy');
-
-            document.body.removeChild(textarea);
-
-            showToast('已複製完整告別式資訊');
-        });
-}
- function shareLine() {
-
-    const shareText =
+        // =========================
+        // Share LINE
+        // =========================
+        function shareLine() {
+            const shareText =
 `【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
@@ -1169,87 +1148,59 @@ ${window.location.href}`;
 平日安靈地點：［喪宅］
 地址：桃園市蘆竹區中山路87巷1弄16號`;
 
-    if (navigator.share) {
+            if (navigator.share) {
+                navigator.share({
+                    title: '陳哲雄先生 雲端訃聞',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                const text = `${shareText}\n\n雲端訃聞：\n${window.location.href}`;
+                navigator.clipboard.writeText(text);
+                window.open(
+                    'https://line.me/R/msg/text/?' + encodeURIComponent(text),
+                    '_blank'
+                );
+                showToast('已開啟 LINE 分享');
+            }
+        }
 
-        navigator.share({
-            title: '陳哲雄先生 雲端訃聞',
-            text: shareText,
-            url: window.location.href
-        });
+        // =========================
+        // Add to Calendar
+        // =========================
+        function addCal() {
+            const start = '20260627T143000';
+            const end   = '20260627T163000';
+            const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                + '&text=' + encodeURIComponent('陳哲雄先生 告別式')
+                + '&dates=' + start + '/' + end
+                + '&location=' + encodeURIComponent('桃園殯儀館 景德廳')
+                + '&ctz=Asia/Taipei';
+            window.open(url, '_blank');
+        }
 
-    } else {
-
-        const text =
-`${shareText}
-
-雲端訃聞：
-${window.location.href}`;
-
-        navigator.clipboard.writeText(text);
-
-        window.open(
-            'https://line.me/R/msg/text/?' +
-            encodeURIComponent(text),
-            '_blank'
-        );
-
-        showToast('已開啟 LINE 分享');
-    }
-}
-    
-function addCal() {
-
-    const ua = navigator.userAgent;
-
-    if (/iPhone|iPad|iPod/i.test(ua)) {
-
-        const start = '20260627T143000';
-        const end   = '20260627T163000';
-
-        const url =
-`https://calendar.google.com/calendar/render?action=TEMPLATE
-&text=${encodeURIComponent('陳哲雄先生 告別式')}
-&dates=${start}/${end}
-&location=${encodeURIComponent('桃園殯儀館 景德廳')}
-&ctz=Asia/Taipei`
-.replace(/\s+/g,'');
-
-        window.open(url,'_blank');
-
-    } else {
-
-        const start = '20260627T143000';
-        const end   = '20260627T163000';
-
-        const url =
-`https://calendar.google.com/calendar/render?action=TEMPLATE
-&text=${encodeURIComponent('陳哲雄先生 告別式')}
-&dates=${start}/${end}
-&location=${encodeURIComponent('桃園殯儀館 景德廳')}
-&ctz=Asia/Taipei`
-.replace(/\s+/g,'');
-
-        window.open(url,'_blank');
-    }
-}
-                // Background Music
+        // =========================
+        // ✅ 修正四：isPlaying 移入 then() 內，避免播放失敗時狀態錯誤
+        // Background Music
+        // =========================
         const bgm = document.getElementById('bgm');
         let isPlaying = false;
 
         function toggleBgm() {
             if (isPlaying) {
                 bgm.pause();
+                isPlaying = false;
                 document.getElementById('audioText').textContent = '播放音樂';
                 document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/speaker.png';
             } else {
                 bgm.play().then(() => {
+                    isPlaying = true;
                     document.getElementById('audioText').textContent = '暫停音樂';
                     document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/mute.png';
-                }).catch(err => {
+                }).catch(() => {
                     showToast('請點擊畫面後再播放音樂');
                 });
             }
-            isPlaying = !isPlaying;
         }
     </script>
 </body>
