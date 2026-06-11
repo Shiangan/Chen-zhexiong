@@ -417,12 +417,12 @@
             writing-mode: vertical-rl; 
             -webkit-writing-mode: vertical-rl;
             font-family: 'Iansui', '書寫', 'ZF-Font', 'Noto Serif TC', serif;
-            font-size: 17.5px; letter-spacing: 5px; color: var(--sub-ink);
+            font-size: clamp(12px, 4vw, 17.5px); letter-spacing: 5px; color: var(--sub-ink);
             line-height: 1.8; white-space: nowrap;
             display: inline-block; text-align: left;
-            height: fit-content;
-            max-height: 320px; /* 安全單行最高上限 */
-            padding-bottom: 60px; /* 預留底部絕對安全空白，絕不被擋字 */
+            height: auto;
+            max-height: none; /* 安全單行最高上限 */
+            padding-bottom: 20px; /* 預留底部絕對安全空白，絕不被擋字 */
         }
 
         /* 修正重點：加大標題左右間距(直排為前後行)，徹底解決擋道吃字 */
