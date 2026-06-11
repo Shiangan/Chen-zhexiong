@@ -597,12 +597,14 @@
             </div>
 
             <section class="reveal" aria-label="訃告正本">
-                <span class="section-title">訃告正本公告</span>
-                <div class="obituary-wrap">
-                    <img src="image/IMG_9275.jpeg" class="obituary-img" onclick="openLightbox(this.src)" alt="訃告正本">
-                </div>
-                <p class="zoom-hint">（ 點擊圖片可放大閱讀 ）</p>
-            </section>
+    <span class="section-title">訃告正本公告</span>
+    <!-- 修改這裡：將 onclick 移到 div，並加入 data-src -->
+    <div class="obituary-wrap" onclick="openLightbox(this.querySelector('img').src)" style="cursor: pointer;">
+        <img src="image/IMG_9275.jpeg" class="obituary-img" alt="訃告正本">
+    </div>
+    <p class="zoom-hint">（ 點擊圖片或周圍可放大閱讀 ）</p>
+</section>
+
 
             <div class="section-divider" aria-hidden="true">
                 <div class="divider-diamond"></div><div class="divider-diamond"></div><div class="divider-diamond"></div>
@@ -985,84 +987,85 @@
 
         /* 💡 核心 JS 優化：物理隨機延遲算法，模擬書法提筆頓挫，完美去打字感 */
         function initAndWriteChapter(index) {
-            if (writingTimeout) clearTimeout(writingTimeout);
-
-            const container = document.getElementById('scrollContainer');
-            const targetChapter = document.getElementById(`chap-${index}`);
-            const lines = targetChapter.querySelectorAll('.ink-line');
-            const textQueue = [];
-
-            lines.forEach((line) => {
-                if (line.querySelector('.ink-char')) {
-                    line.textContent = line.textContent; 
-                }
-                
-                const originalText = line.textContent;
+    const targetChapter = document.getElementById(`chap-${index}`);
+    const lines = targetChapter.querySelectorAll('.ink-line');
+    
+    // 檢查此章節是否已完成動畫
+    if (localStorage.getItem(`chapterDone_${index}`) === 'true') {
+        // 直接顯示所有字，不執行動畫
+        lines.forEach(line => {
+            // 如果還沒變成 span 結構，先轉換 (防止刷新後文字消失)
+            if (!line.querySelector('.ink-char')) {
+                const text = line.textContent;
                 line.textContent = '';
-                
-                const charSpans = [];
-                for (let char of originalText) {
+                for (let char of text) {
                     const span = document.createElement('span');
-                    span.className = 'ink-char';
+                    span.className = 'ink-char inked'; // 直接加上 inked
                     span.textContent = char;
                     line.appendChild(span);
-                    charSpans.push(span);
                 }
-                
-                let type = 'normal';
-                if (line.classList.contains('chapter-title')) type = 'title';
-                if (line.classList.contains('highlight')) type = 'highlight';
-
-                textQueue.push({ lineElement: line, spans: charSpans, type: type });
-            });
-
-            let currentLineIndex = 0;
-            let currentCharIndex = 0;
-
-            function writeNextChar() {
-                if (currentLineIndex >= textQueue.length) {
-                    document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 翻閱盡此生深情 ⟩";
-                    return;
-                }
-
-                document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 正在逐字雋刻 ⟩";
-                const currentLineData = textQueue[currentLineIndex];
-                const { lineElement, spans, type } = currentLineData;
-
-                if (currentCharIndex < spans.length) {
-                    spans[currentCharIndex].classList.add('inked');
-                    currentCharIndex++;
-
-                    const containerWidth = container.clientWidth;
-                    const lineLeft = lineElement.offsetLeft;
-                    
-                    container.scrollTo({
-                        left: lineLeft - containerWidth + 140,
-                        behavior: 'smooth'
-                    });
-
-                    // 💡 動態物理延遲計算法：依據不同文字屬性決定運筆時間
-                    let delay = 90; 
-                    if (type === 'title') delay = Math.random() * 90 + 160;      /* 大標題運筆沈穩偏慢 */
-                    if (type === 'highlight') delay = Math.random() * 80 + 90;   /* 金句悲愴有力，錯落有致 */
-                    if (type === 'normal') delay = Math.random() * 70 + 60;      /* 內文流暢自然 */
-
-                    // 遇到標點符號自動模擬「換行、沾墨與吸水停頓」
-                    const lastChar = spans[currentCharIndex - 1].textContent;
-                    if (['，', '。', '！', '、', '：', '」', '「'].includes(lastChar)) {
-                        delay += 450; 
-                    }
-
-                    writingTimeout = setTimeout(writeNextChar, delay);
-                } else {
-                    currentLineIndex++;
-                    currentCharIndex = 0;
-                    writingTimeout = setTimeout(writeNextChar, 500); /* 換行提筆停頓 */
-                }
+            } else {
+                // 若已經是 span，直接加上 inked
+                line.querySelectorAll('.ink-char').forEach(span => span.classList.add('inked'));
             }
+        });
+        document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 緬懷深情 ⟩";
+        return;
+    }
 
-            writeNextChar();
+    // --- 以下為原本的動畫邏輯 ---
+    if (writingTimeout) clearTimeout(writingTimeout);
+
+    const container = document.getElementById('scrollContainer');
+    const textQueue = [];
+
+    lines.forEach((line) => {
+        const originalText = line.textContent;
+        line.textContent = '';
+        const charSpans = [];
+        for (let char of originalText) {
+            const span = document.createElement('span');
+            span.className = 'ink-char';
+            span.textContent = char;
+            line.appendChild(span);
+            charSpans.push(span);
         }
+        textQueue.push({ lineElement: line, spans: charSpans, type: line.classList.contains('chapter-title') ? 'title' : (line.classList.contains('highlight') ? 'highlight' : 'normal') });
+    });
+
+    let currentLineIndex = 0;
+    let currentCharIndex = 0;
+
+    function writeNextChar() {
+        if (currentLineIndex >= textQueue.length) {
+            // 動畫結束，記錄狀態到 localStorage
+            localStorage.setItem(`chapterDone_${index}`, 'true');
+            document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 翻閱盡此生深情 ⟩";
+            return;
+        }
+
+        document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 正在逐字雋刻 ⟩";
+        const { lineElement, spans, type } = textQueue[currentLineIndex];
+
+        if (currentCharIndex < spans.length) {
+            spans[currentCharIndex].classList.add('inked');
+            currentCharIndex++;
+            // 自動捲動
+            container.scrollTo({ left: lineElement.offsetLeft - container.clientWidth + 140, behavior: 'smooth' });
+
+            let delay = (type === 'title') ? 160 : (type === 'highlight' ? 90 : 60);
+            const lastChar = spans[currentCharIndex - 1].textContent;
+            if (['，', '。', '！', '、', '：', '」', '「'].includes(lastChar)) delay += 450;
+            writingTimeout = setTimeout(writeNextChar, delay);
+        } else {
+            currentLineIndex++;
+            currentCharIndex = 0;
+            writingTimeout = setTimeout(writeNextChar, 500);
+        }
+    }
+    writeNextChar();
+}
+
 
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
