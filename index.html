@@ -942,27 +942,35 @@
     </div>
 
     <script>
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    if (entry.target.classList.contains('calligraphy-area')) {
-                        initAndWriteChapter(0);
-                    }
-                }
-            });
-        }, observerOptions);
-
         // =========================
-// Observer（優化防重複觸發）
+// Observer（穩定版）
 // =========================
-// =========================
-// Observer（避免重複觸發）
-// =========================
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.05
+};
+
+let chapterPlayedMap = {};
+let rafId = null;
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('visible');
+
+        if (entry.target.classList.contains('calligraphy-area')) {
+            initAndWriteChapter(0);
+        }
+    });
+
+}, observerOptions);
+
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-let chapterPlayed = false;
 
 // =========================
 // Chapter switching
@@ -984,41 +992,61 @@ function switchChapter(index) {
     initAndWriteChapter(index);
 }
 
+
 // =========================
-// 🎬 影片級書寫動畫（不卡版本）
+// 🖌️ 書法級動畫（升級版）
 // =========================
 function initAndWriteChapter(index) {
 
-    if (chapterPlayed) return; // ✔ 只播放一次
-    chapterPlayed = true;
-
     const activeChapter = document.getElementById(`chap-${index}`);
     if (!activeChapter) return;
+
+    // ✔ 每章只播一次（安全控制）
+    if (chapterPlayedMap[index]) return;
+    chapterPlayedMap[index] = true;
 
     const chars = activeChapter.querySelectorAll('.ink-char');
 
     let i = 0;
 
-    // 每幀寫入控制（核心）
+    // ✔ 停掉上一個動畫
+    if (rafId) cancelAnimationFrame(rafId);
+
     function writeFrame() {
 
-        // 👉 控制「像寫字速度」
-        // 數字越小越慢越細緻（1 = 最像手寫）
-        const speed = 1;
+        // =========================
+        // ✨ 書法核心：控制筆速
+        // =========================
+        const speed = 1; // 1 = 最像真實毛筆
 
         for (let j = 0; j < speed && i < chars.length; j++, i++) {
-            chars[i].classList.add('inked');
+
+            const el = chars[i];
+
+            // ✔ 墨水「先落後顯」
+            el.style.transition = "all 0.25s ease";
+
+            // ✔ 書法感（壓筆 + 位移 + 模糊收斂）
+            el.style.transform = `
+                translateY(${Math.random() * 2}px)
+                scale(${0.92 + Math.random() * 0.08})
+            `;
+
+            el.style.opacity = "1";
+            el.style.filter = "blur(0px)";
+
+            el.classList.add('inked');
         }
 
         if (i < chars.length) {
-            requestAnimationFrame(writeFrame);
+            rafId = requestAnimationFrame(writeFrame);
         }
     }
 
-    requestAnimationFrame(writeFrame);
+    rafId = requestAnimationFrame(writeFrame);
 
     // =========================
-    // scroll 優化（不觸發 reflow）
+    // scroll（完全不卡）
     // =========================
     const scrollContainer = document.getElementById('scrollContainer');
 
