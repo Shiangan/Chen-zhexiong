@@ -441,23 +441,18 @@
         }
 
         /* 🖋️ 核心優化：手寫毛筆揮毫感（非死板打字感） */
-        .ink-char {
-            display: inline-block;
-            opacity: 0;
-            filter: blur(8px); /* 大範圍模糊模擬乾筆墨韻 */
-            transform: scale(1.1) translateY(8px); /* 微調大小與縱向位移，模擬落筆動態 */
-            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        filter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        /* 揮毫落紙完成狀態 */
-        .ink-char.inked {
-            opacity: 1;
-            filter: blur(0px);
-            transform: scale(1) translateY(0);
-        }
+   .ink-char {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(1px);
+    transition: all 0.25s ease;
+}
 
+.ink-char.inked {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
         #lightbox {
             position: fixed; inset: 0;
             background: rgba(15,15,15,0.96);
@@ -962,9 +957,12 @@
         // =========================
 // Observer（優化防重複觸發）
 // =========================
+// =========================
+// Observer（避免重複觸發）
+// =========================
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-let hasInitChapter = false;
+let chapterPlayed = false;
 
 // =========================
 // Chapter switching
@@ -975,13 +973,11 @@ function switchChapter(index) {
 
     currentChapter = index;
 
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach((tab, idx) => {
+    document.querySelectorAll('.tab-btn').forEach((tab, idx) => {
         tab.classList.toggle('active', idx === index);
     });
 
-    const chapters = document.querySelectorAll('.story-chapter');
-    chapters.forEach((chap, idx) => {
+    document.querySelectorAll('.story-chapter').forEach((chap, idx) => {
         chap.classList.toggle('active', idx === index);
     });
 
@@ -989,44 +985,44 @@ function switchChapter(index) {
 }
 
 // =========================
-// 不卡版本：逐字動畫（核心重構）
+// 🎬 影片級書寫動畫（不卡版本）
 // =========================
 function initAndWriteChapter(index) {
+
+    if (chapterPlayed) return; // ✔ 只播放一次
+    chapterPlayed = true;
 
     const activeChapter = document.getElementById(`chap-${index}`);
     if (!activeChapter) return;
 
     const chars = activeChapter.querySelectorAll('.ink-char');
 
-    // ✔ 只允許第一次或切換時執行
-    if (hasInitChapter && index === 0) return;
-    hasInitChapter = true;
-
     let i = 0;
 
-    function reveal() {
+    // 每幀寫入控制（核心）
+    function writeFrame() {
 
-        const batchSize = 6; // 每次顯示幾個字（避免卡頓）
+        // 👉 控制「像寫字速度」
+        // 數字越小越慢越細緻（1 = 最像手寫）
+        const speed = 1;
 
-        for (let j = 0; j < batchSize && i < chars.length; j++, i++) {
+        for (let j = 0; j < speed && i < chars.length; j++, i++) {
             chars[i].classList.add('inked');
         }
 
         if (i < chars.length) {
-            requestAnimationFrame(reveal);
+            requestAnimationFrame(writeFrame);
         }
     }
 
-    requestAnimationFrame(reveal);
+    requestAnimationFrame(writeFrame);
 
     // =========================
-    // scroll 優化（避免強制 reflow）
+    // scroll 優化（不觸發 reflow）
     // =========================
     const scrollContainer = document.getElementById('scrollContainer');
 
     if (scrollContainer) {
-
-        // 改成 scrollIntoView（比 scrollLeft 安全）
         requestAnimationFrame(() => {
             scrollContainer.scrollTo({
                 left: scrollContainer.scrollWidth,
