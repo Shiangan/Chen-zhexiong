@@ -1072,22 +1072,9 @@
             }, 2500);
         }
 
-        // Copy Text
-        function copyText() {
-            const text = `【追思】陳哲雄 先生\n告別式：民國 115 年 06 月 27 日（星期六）\n家奠禮：14:30\n公奠禮：15:30\n地點：桃園殯儀館 景德廳\n地址：320 桃園市桃園區大有路916號`;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('已複製告別式資訊');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                showToast('複製失敗，請手動複製');
-            });
-        }
+function copyText() {
 
- function shareLine() {
-
-    const url = encodeURIComponent(window.location.href);
-
-    const text = encodeURIComponent(
+    const text =
 `【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
@@ -1096,59 +1083,105 @@
 公奠禮：15:30
 
 地點：桃園殯儀館 景德廳
+地址：320桃園市桃園區大有路916號
 
-詳情請參閱雲端訃聞：`
-    );
+雲端訃聞：
+${window.location.href}`;
 
-    window.open(
-        `https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`,
-        '_blank'
-    );
+    navigator.clipboard.writeText(text)
+        .then(() => {
+
+            showToast('已複製完整告別式資訊');
+
+        })
+        .catch(() => {
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+
+            document.body.appendChild(textarea);
+
+            textarea.select();
+
+            document.execCommand('copy');
+
+            document.body.removeChild(textarea);
+
+            showToast('已複製完整告別式資訊');
+        });
 }
+ function shareLine() {
 
+    const shareText =
+`【追思】陳哲雄先生
+
+告別式日期：115年06月27日（星期六）
+
+家奠禮：14:30
+公奠禮：15:30
+
+地點：桃園殯儀館 景德廳
+地址：桃園市桃園區大有路916號
+
+雲端訃聞：
+${window.location.href}`;
+
+    if (navigator.share) {
+
+        navigator.share({
+            title: '陳哲雄先生 雲端訃聞',
+            text: shareText,
+            url: window.location.href
+        });
+
+    } else {
+
+        navigator.clipboard.writeText(shareText);
+
+        showToast('已複製分享內容，請貼到 LINE');
+
+        window.open(
+            'https://line.me/R/msg/text/?' +
+            encodeURIComponent(shareText),
+            '_blank'
+        );
+    }
+}
     
 function addCal() {
 
-    const title = encodeURIComponent(
-        '陳哲雄先生 告別式'
+    const icsContent =
+`BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:陳哲雄先生 告別式
+DESCRIPTION:家奠禮14:30 公奠禮15:30
+LOCATION:桃園殯儀館 景德廳
+DTSTART:20260627T063000Z
+DTEND:20260627T083000Z
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob(
+        [icsContent],
+        { type: 'text/calendar;charset=utf-8' }
     );
 
-    const details = encodeURIComponent(
-        '家奠禮 14:30\n公奠禮 15:30'
-    );
+    const url = URL.createObjectURL(blob);
 
-    const location = encodeURIComponent(
-        '桃園殯儀館 景德廳 桃園市桃園區大有路916號'
-    );
+    const a = document.createElement('a');
 
-    const start = '20260627T143000';
-    const end   = '20260627T163000';
-    const calendarUrl =
-`https://calendar.google.com/calendar/render?action=TEMPLATE
-&text=${title}
-&dates=${start}/${end}
-&details=${details}
-&location=${location}
-&ctz=Asia/Taipei`;
-        // Background Music
-        const bgm = document.getElementById('bgm');
-        let isPlaying = false;
+    a.href = url;
+    a.download = '陳哲雄先生告別式.ics';
 
-        function toggleBgm() {
-            if (isPlaying) {
-                bgm.pause();
-                document.getElementById('audioText').textContent = '播放音樂';
-                document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/speaker.png';
-            } else {
-                bgm.play().then(() => {
-                    document.getElementById('audioText').textContent = '暫停音樂';
-                    document.getElementById('audioIcon').src = 'https://img.icons8.com/material-rounded/24/272727/mute.png';
-                }).catch(err => {
-                    showToast('請點擊畫面後再播放音樂');
-                });
-            }
-            isPlaying = !isPlaying;
-        }
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+}
     </script>
 </body>
 </html>
