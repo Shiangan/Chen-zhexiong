@@ -1121,10 +1121,7 @@ ${window.location.href}`;
 公奠禮：15:30
 
 地點：桃園殯儀館 景德廳
-地址：桃園市桃園區大有路916號
-
-雲端訃聞：
-${window.location.href}`;
+地址：桃園市桃園區大有路916號`;
 
     if (navigator.share) {
 
@@ -1136,15 +1133,21 @@ ${window.location.href}`;
 
     } else {
 
-        navigator.clipboard.writeText(shareText);
+        const text =
+`${shareText}
 
-        showToast('已複製分享內容，請貼到 LINE');
+雲端訃聞：
+${window.location.href}`;
+
+        navigator.clipboard.writeText(text);
 
         window.open(
             'https://line.me/R/msg/text/?' +
-            encodeURIComponent(shareText),
+            encodeURIComponent(text),
             '_blank'
         );
+
+        showToast('已開啟 LINE 分享');
     }
 }
     
@@ -1202,7 +1205,6 @@ function addCal() {
             }
             isPlaying = !isPlaying;
         }
-    </script>
     </script>
 </body>
 </html>
