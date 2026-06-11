@@ -1150,37 +1150,38 @@ ${window.location.href}`;
     
 function addCal() {
 
-    const icsContent =
-`BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:陳哲雄先生 告別式
-DESCRIPTION:家奠禮14:30 公奠禮15:30
-LOCATION:桃園殯儀館 景德廳
-DTSTART:20260627T063000Z
-DTEND:20260627T083000Z
-END:VEVENT
-END:VCALENDAR`;
+    const ua = navigator.userAgent;
 
-    const blob = new Blob(
-        [icsContent],
-        { type: 'text/calendar;charset=utf-8' }
-    );
+    if (/iPhone|iPad|iPod/i.test(ua)) {
 
-    const url = URL.createObjectURL(blob);
+        const start = '20260627T143000';
+        const end   = '20260627T163000';
 
-    const a = document.createElement('a');
+        const url =
+`https://calendar.google.com/calendar/render?action=TEMPLATE
+&text=${encodeURIComponent('陳哲雄先生 告別式')}
+&dates=${start}/${end}
+&location=${encodeURIComponent('桃園殯儀館 景德廳')}
+&ctz=Asia/Taipei`
+.replace(/\s+/g,'');
 
-    a.href = url;
-    a.download = '陳哲雄先生告別式.ics';
+        window.open(url,'_blank');
 
-    document.body.appendChild(a);
+    } else {
 
-    a.click();
+        const start = '20260627T143000';
+        const end   = '20260627T163000';
 
-    document.body.removeChild(a);
+        const url =
+`https://calendar.google.com/calendar/render?action=TEMPLATE
+&text=${encodeURIComponent('陳哲雄先生 告別式')}
+&dates=${start}/${end}
+&location=${encodeURIComponent('桃園殯儀館 景德廳')}
+&ctz=Asia/Taipei`
+.replace(/\s+/g,'');
 
-    URL.revokeObjectURL(url);
+        window.open(url,'_blank');
+    }
 }
     </script>
 </body>
