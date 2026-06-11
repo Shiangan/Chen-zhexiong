@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta property="og:title" content="【追思】陳哲雄 先生 雲端訃告">
     <meta property="og:description" content="敬邀親友們，陪伴陳哲雄先生走完塵世最後一趟旅程。">
-    <link rel="icon" href="/image/logo.ico" type="image/png">
+    <link rel="icon" href="/image/logo.ico" type="image/ico">
     <meta property="og:image" content="image/Write.png">
     <meta property="og:type" content="website">
     <title>永恆思念：陳哲雄 先生</title>
@@ -959,72 +959,82 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // =========================
+// Observer（優化防重複觸發）
+// =========================
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Chapter switching and calligraphy writing animation
-        let currentChapter = 0;
-        let writingTimeout = null;
+let hasInitChapter = false;
 
-        function switchChapter(index) {
-            currentChapter = index;
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach((tab, idx) => {
-                if (idx === index) tab.classList.add('active');
-                else tab.classList.remove('active');
-            });
+// =========================
+// Chapter switching
+// =========================
+let currentChapter = 0;
 
-            const chapters = document.querySelectorAll('.story-chapter');
-            chapters.forEach((chap, idx) => {
-                if (idx === index) chap.classList.add('active');
-                else chap.classList.remove('active');
-            });
+function switchChapter(index) {
 
-            initAndWriteChapter(index);
+    currentChapter = index;
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach((tab, idx) => {
+        tab.classList.toggle('active', idx === index);
+    });
+
+    const chapters = document.querySelectorAll('.story-chapter');
+    chapters.forEach((chap, idx) => {
+        chap.classList.toggle('active', idx === index);
+    });
+
+    initAndWriteChapter(index);
+}
+
+// =========================
+// 不卡版本：逐字動畫（核心重構）
+// =========================
+function initAndWriteChapter(index) {
+
+    const activeChapter = document.getElementById(`chap-${index}`);
+    if (!activeChapter) return;
+
+    const chars = activeChapter.querySelectorAll('.ink-char');
+
+    // ✔ 只允許第一次或切換時執行
+    if (hasInitChapter && index === 0) return;
+    hasInitChapter = true;
+
+    let i = 0;
+
+    function reveal() {
+
+        const batchSize = 6; // 每次顯示幾個字（避免卡頓）
+
+        for (let j = 0; j < batchSize && i < chars.length; j++, i++) {
+            chars[i].classList.add('inked');
         }
 
-        function initAndWriteChapter(index) {
-            if (writingTimeout) clearTimeout(writingTimeout);
-            
-            // Reset all ink lines in all chapters first just in case
-            document.querySelectorAll('.ink-line').forEach(line => {
-                line.innerHTML = line.textContent; // strip spans if any
-            });
-
-            const activeChapter = document.getElementById(`chap-${index}`);
-            if (!activeChapter) return;
-
-            const lines = activeChapter.querySelectorAll('.ink-line');
-            let totalDelay = 0;
-
-            lines.forEach(line => {
-                const text = line.textContent.trim();
-                line.innerHTML = ''; // clear text
-                
-                for (let i = 0; i < text.length; i++) {
-                    const span = document.createElement('span');
-                    span.classList.add('ink-char');
-                    span.textContent = text[i];
-                    line.appendChild(span);
-                }
-
-                const chars = line.querySelectorAll('.ink-char');
-                chars.forEach((char, charIdx) => {
-                    const delay = totalDelay + charIdx * 80; // 80ms per char
-                    setTimeout(() => {
-                        char.classList.add('inked');
-                    }, delay);
-                });
-                
-                totalDelay += text.length * 80 + 400; // 400ms pause between lines
-            });
-            
-            // Scroll container to start when switching
-            const scrollContainer = document.getElementById('scrollContainer');
-            if (scrollContainer) {
-                scrollContainer.scrollLeft = scrollContainer.scrollWidth; // scroll to right for vertical-rl
-            }
+        if (i < chars.length) {
+            requestAnimationFrame(reveal);
         }
+    }
 
+    requestAnimationFrame(reveal);
+
+    // =========================
+    // scroll 優化（避免強制 reflow）
+    // =========================
+    const scrollContainer = document.getElementById('scrollContainer');
+
+    if (scrollContainer) {
+
+        // 改成 scrollIntoView（比 scrollLeft 安全）
+        requestAnimationFrame(() => {
+            scrollContainer.scrollTo({
+                left: scrollContainer.scrollWidth,
+                behavior: 'auto'
+            });
+        });
+    }
+}
         // Lightbox
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
@@ -1078,12 +1088,11 @@ function copyText() {
 `【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
-
 家奠禮：14:30
 公奠禮：15:30
-
-地點：桃園殯儀館 景德廳
-地址：320桃園市桃園區大有路916號
+地點：桃園殯儀館 [ 景德廳 ]
+地址：桃園市桃園區大有路916號
+平日安靈地點：桃園市蘆竹區中山路87巷1弄16號
 
 雲端訃聞：
 ${window.location.href}`;
@@ -1116,12 +1125,11 @@ ${window.location.href}`;
 `【追思】陳哲雄先生
 
 告別式日期：115年06月27日（星期六）
-
 家奠禮：14:30
 公奠禮：15:30
-
-地點：桃園殯儀館 景德廳
-地址：桃園市桃園區大有路916號`;
+地點：桃園殯儀館 [ 景德廳 ]
+地址：桃園市桃園區大有路916號
+平日安靈地點：桃園市蘆竹區中山路87巷1弄16號`;
 
     if (navigator.share) {
 
