@@ -1087,11 +1087,13 @@
         }
 
         // Share Line
-        function shareLine() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent('敬邀親友們，陪伴陳哲雄先生走完塵世最後一趟旅程。');
-            window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank');
-        }
+       function shareLine() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(
+        `https://social-plugins.line.me/lineit/share?url=${url}`,
+        '_blank'
+    );
+}
 
         // Add to Calendar (ICS generation)
         function addCal() {
