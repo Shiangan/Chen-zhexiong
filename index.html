@@ -985,33 +985,36 @@
             initAndWriteChapter(index);
         }
 
-        /* 💡 核心 JS 優化：物理隨機延遲算法，模擬書法提筆頓挫，完美去打字感 */
-        function initAndWriteChapter(index) {
+      function initAndWriteChapter(index) {
+    // 1. 強制清理：確保切換時，前一個動畫立刻停止
+    if (writingTimeout) {
+        clearTimeout(writingTimeout);
+        writingTimeout = null;
+    }
+
     const targetChapter = document.getElementById(`chap-${index}`);
     const lines = targetChapter.querySelectorAll('.ink-line');
     
-    // 檢查此章節是否已完成動畫
+    // 2. 檢查記憶：若該章節已完成，直接呈現結果
     if (localStorage.getItem(`chapterDone_${index}`) === 'true') {
-        // 直接顯示所有字，不執行動畫
         lines.forEach(line => {
-            // 如果還沒變成 span 結構，先轉換 (防止刷新後文字消失)
             if (!line.querySelector('.ink-char')) {
                 const text = line.textContent;
                 line.textContent = '';
                 for (let char of text) {
                     const span = document.createElement('span');
-                    span.className = 'ink-char inked'; // 直接加上 inked
+                    span.className = 'ink-char inked'; 
                     span.textContent = char;
                     line.appendChild(span);
                 }
             } else {
-                // 若已經是 span，直接加上 inked
                 line.querySelectorAll('.ink-char').forEach(span => span.classList.add('inked'));
             }
         });
         document.getElementById('scrollHint').textContent = "⟨ 歲月長卷 ‧ 緬懷深情 ⟩";
         return;
     }
+
 
     // --- 以下為原本的動畫邏輯 ---
     if (writingTimeout) clearTimeout(writingTimeout);
